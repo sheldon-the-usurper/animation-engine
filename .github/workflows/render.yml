@@ -15,8 +15,8 @@ jobs:
       matrix:
         chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] # Split into 10 parts
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
       
@@ -27,19 +27,22 @@ jobs:
           npm install
 
       - name: Start Local Server
-        run: npm start &
+        run: |
+          npm start &
+          # Wait for server to be ready
+          npx wait-on http://localhost:3000/index.html --timeout 60000
         env:
           PORT: 3000
 
       - name: Render Chunk
         run: |
           # Calculate frames for this machine
+          # Total frames for ~83s at 60fps is ~5000
           TOTAL_FRAMES=5000
           PER_CHUNK=500
           START=$(( ${{ matrix.chunk }} * $PER_CHUNK ))
           END=$(( $START + $PER_CHUNK ))
           
-          # Use a temporary script to trigger the renderer
           node -e "
             const { renderVideo } = require('./src/renderer');
             renderVideo('chunk_${{ matrix.chunk }}', {
@@ -51,36 +54,45 @@ jobs:
           "
 
       - name: Upload Chunk
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: frames-chunk-${{ matrix.chunk }}
-          path: frames/chunk_${{ matrix.chunk }}/*.png
+          path: frames/chunk_${{ matrix.chunk }}/
+          if-no-files-found: error
+          retention-days: 1
 
   assemble-video:
     needs: render-chunks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Download all chunks
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: all-frames
+          pattern: frames-chunk-*
+          merge-multiple: true
 
       - name: Flatten and Assemble
         run: |
           mkdir -p final_frames
-          # Move all chunk frames into one directory
-          find all-frames -name "*.png" -exec mv {} final_frames/ \;
+          # The merge-multiple: true should have put all pngs in all-frames directly
+          # but we'll check and move just in case to ensure sortability
+          mv all-frames/*.png final_frames/ || true
           
-          # Assemble with FFmpeg
+          # Install ffmpeg if not present (usually is on ubuntu-latest)
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          
+          # Assemble with FFmpeg using glob pattern
+          # We use -pattern_type glob which requires the files to be named consistently
           ffmpeg -y -framerate ${{ github.event.inputs.fps }} -pattern_type glob -i 'final_frames/*.png' -c:v libx264 -pix_fmt yuv420p output_silent.mp4
           
-          # Add Voiceover
+          # Add Voiceover from public/assets/
           ffmpeg -y -i output_silent.mp4 -i public/assets/voiceover_nexus.mp3 -c:v copy -c:a aac -shortest react_nexus_final.mp4
 
       - name: Upload Final Video
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Final-EulerFold-Video
           path: react_nexus_final.mp4

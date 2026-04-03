@@ -33,17 +33,24 @@ async function renderVideo(taskId, options = {}) {
         await page.goto(`${baseUrl}/index.html`, { waitUntil: 'networkidle0' });
 
         const totalFrames = Math.ceil(fps * duration);
-        const actualEndFrame = endFrame || totalFrames;
+        const actualEndFrame = endFrame !== null ? Math.min(endFrame, totalFrames) : totalFrames;
         
-        console.log(`[${taskId}] Rendering range: ${startFrame} to ${actualEndFrame}`);
+        console.log(`[${taskId}] Rendering range: ${startFrame} to ${actualEndFrame} (Total Animation Frames: ${totalFrames})`);
 
         for (let i = startFrame; i < actualEndFrame; i++) {
-            await page.evaluate((frameIndex) => {
-                if (window.renderFrame) window.renderFrame(frameIndex);
-            }, i);
+            try {
+                await page.evaluate((frameIndex) => {
+                    if (window.renderFrame) window.renderFrame(frameIndex);
+                }, i);
 
-            const framePath = path.join(framesDir, `frame_${i.toString().padStart(5, '0')}.png`);
-            await page.screenshot({ path: framePath, omitBackground: false });
+                const framePath = path.join(framesDir, `frame_${i.toString().padStart(5, '0')}.png`);
+                await page.screenshot({ path: framePath, omitBackground: false });
+                
+                if (i % 50 === 0) console.log(`[${taskId}] Captured frame ${i}`);
+            } catch (frameErr) {
+                console.error(`[${taskId}] Error at frame ${i}:`, frameErr);
+                throw frameErr;
+            }
         }
 
         await browser.close();
