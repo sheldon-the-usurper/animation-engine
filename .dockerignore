@@ -1,0 +1,10 @@
+node_modules
+frames
+exports
+*.mp4
+*.mp3
+.git
+.gitignore
+render_*.js
+react_*.html
+*.png
