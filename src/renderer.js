@@ -14,14 +14,12 @@ async function renderVideo(taskId, options = {}) {
         duration = 82.968,
         width = 720,
         height = 1280,
-        baseUrl = 'http://localhost:3000'
+        baseUrl = 'http://localhost:3000',
+        startFrame = 0,
+        endFrame = null
     } = options;
 
     const framesDir = path.join(__dirname, '../frames', taskId);
-    const exportPath = path.join(__dirname, '../exports', `${taskId}.mp4`);
-    const silentVideo = path.join(framesDir, 'silent.mp4');
-    const audioPath = path.join(__dirname, '../public/assets/voiceover_nexus.mp3');
-
     await fs.ensureDir(framesDir);
 
     const browser = await puppeteer.launch({
@@ -35,9 +33,11 @@ async function renderVideo(taskId, options = {}) {
         await page.goto(`${baseUrl}/index.html`, { waitUntil: 'networkidle0' });
 
         const totalFrames = Math.ceil(fps * duration);
-        console.log(`[${taskId}] Starting render: ${totalFrames} frames`);
+        const actualEndFrame = endFrame || totalFrames;
+        
+        console.log(`[${taskId}] Rendering range: ${startFrame} to ${actualEndFrame}`);
 
-        for (let i = 0; i < totalFrames; i++) {
+        for (let i = startFrame; i < actualEndFrame; i++) {
             await page.evaluate((frameIndex) => {
                 if (window.renderFrame) window.renderFrame(frameIndex);
             }, i);
@@ -47,17 +47,7 @@ async function renderVideo(taskId, options = {}) {
         }
 
         await browser.close();
-
-        // FFmpeg Processing
-        console.log(`[${taskId}] Muxing video and audio...`);
-        execSync(`ffmpeg -y -framerate ${fps} -i ${framesDir}/frame_%05d.png -c:v libx264 -pix_fmt yuv420p -r ${fps} ${silentVideo}`);
-        execSync(`ffmpeg -y -i ${silentVideo} -i ${audioPath} -c:v copy -c:a aac -shortest ${exportPath}`);
-
-        // Cleanup frames
-        await fs.remove(framesDir);
-        console.log(`[${taskId}] Render Complete: ${exportPath}`);
-        
-        return `${taskId}.mp4`;
+        return true;
     } catch (error) {
         if (browser) await browser.close();
         throw error;

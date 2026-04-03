@@ -1,0 +1,86 @@
+name: Parallel Render Engine
+
+on:
+  workflow_dispatch:
+    inputs:
+      fps:
+        description: 'Frames per second'
+        required: true
+        default: '60'
+
+jobs:
+  render-chunks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] # Split into 10 parts
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg google-chrome-stable
+          npm install
+
+      - name: Start Local Server
+        run: npm start &
+        env:
+          PORT: 3000
+
+      - name: Render Chunk
+        run: |
+          # Calculate frames for this machine
+          TOTAL_FRAMES=5000
+          PER_CHUNK=500
+          START=$(( ${{ matrix.chunk }} * $PER_CHUNK ))
+          END=$(( $START + $PER_CHUNK ))
+          
+          # Use a temporary script to trigger the renderer
+          node -e "
+            const { renderVideo } = require('./src/renderer');
+            renderVideo('chunk_${{ matrix.chunk }}', {
+              startFrame: $START,
+              endFrame: $END,
+              fps: ${{ github.event.inputs.fps }},
+              baseUrl: 'http://localhost:3000'
+            }).then(() => process.exit(0)).catch(err => { console.error(err); process.exit(1); });
+          "
+
+      - name: Upload Chunk
+        uses: actions/upload-artifact@v3
+        with:
+          name: frames-chunk-${{ matrix.chunk }}
+          path: frames/chunk_${{ matrix.chunk }}/*.png
+
+  assemble-video:
+    needs: render-chunks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Download all chunks
+        uses: actions/download-artifact@v3
+        with:
+          path: all-frames
+
+      - name: Flatten and Assemble
+        run: |
+          mkdir -p final_frames
+          # Move all chunk frames into one directory
+          find all-frames -name "*.png" -exec mv {} final_frames/ \;
+          
+          # Assemble with FFmpeg
+          ffmpeg -y -framerate ${{ github.event.inputs.fps }} -pattern_type glob -i 'final_frames/*.png' -c:v libx264 -pix_fmt yuv420p output_silent.mp4
+          
+          # Add Voiceover
+          ffmpeg -y -i output_silent.mp4 -i public/assets/voiceover_nexus.mp3 -c:v copy -c:a aac -shortest react_nexus_final.mp4
+
+      - name: Upload Final Video
+        uses: actions/upload-artifact@v3
+        with:
+          name: Final-EulerFold-Video
+          path: react_nexus_final.mp4
