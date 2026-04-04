@@ -1,20 +1,32 @@
 {
-  "name": "eulerfold-render-engine",
+  "name": "cellular-winds-explainer",
   "version": "1.0.0",
-  "description": "High-fidelity 3D video rendering backend for EulerFold",
-  "main": "src/server.js",
+  "description": "Branded explainer video system for Cellular Winds discovery.",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "remotion preview src/index.tsx",
+    "render": "remotion render src/index.tsx ComponentShowcase out/demo_vertical.mp4 --log=verbose",
+    "generate-vo": "python3 scripts/generate_vo.py",
+    "analyze-audio": "python3 scripts/analyze_audio.py"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "puppeteer": "^21.0.0",
-    "uuid": "^9.0.0",
-    "cors": "^2.8.5",
-    "fs-extra": "^11.1.1"
+    "@remotion/captions": "4.0.444",
+    "@remotion/cli": "4.0.444",
+    "@remotion/google-fonts": "4.0.444",
+    "@remotion/lottie": "4.0.444",
+    "@remotion/media-utils": "4.0.444",
+    "@remotion/transitions": "4.0.444",
+    "@types/d3": "^7.4.3",
+    "d3": "^7.9.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.300.0",
+    "playwright": "^1.59.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remotion": "4.0.444",
+    "roughjs": "^4.6.6"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@types/react": "^18.2.0",
+    "typescript": "^5.0.0"
   }
 }

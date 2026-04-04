@@ -1,0 +1,58 @@
+[
+  {
+    "id": "hook",
+    "heading": "The Paradox of Poverty",
+    "text": "Imagine two people, Sam and Alex. Both need new boots for work. Alex has fifty dollars, but Sam only has ten. This small gap in savings is about to cost Sam hundreds of dollars.",
+    "mode": "light",
+    "font": "sans-serif"
+  },
+  {
+    "id": "choice",
+    "heading": "The Price of Quality",
+    "text": "Alex buys the high-quality fifty-dollar boots. They are waterproof and built to last a decade. Sam, unable to afford the entry price of quality, buys the cheap ten-dollar pair.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "cycle_start",
+    "heading": "Six Months Later",
+    "text": "Six months later, Sam's boots are worn through. He has to spend another ten dollars. Alex's boots are just getting broken in. Sam has now spent twenty dollars, and he still has low-quality boots.",
+    "mode": "light",
+    "font": "sans-serif"
+  },
+  {
+    "id": "cycle_mid",
+    "heading": "Two Years In",
+    "text": "Fast forward two years. Sam has bought four pairs. He’s now spent forty dollars. Alex is still on his first pair. The gap is closing, and Sam is still walking in the rain.",
+    "mode": "light",
+    "font": "sans-serif"
+  },
+  {
+    "id": "crossover",
+    "heading": "The Crossover Point",
+    "text": "At two and a half years, Sam hits the crossover point. He has now spent fifty dollars—the same as Alex—but Alex still has years of life left in his boots, while Sam is about to buy his fifth pair.",
+    "mode": "light",
+    "font": "sans-serif"
+  },
+  {
+    "id": "total_cost",
+    "heading": "The 10-Year Total",
+    "text": "By the end of ten years, Sam has spent two hundred dollars on twenty pairs of boots. Alex has spent just fifty. This is the mathematical trap of poverty: it is expensive to be poor.",
+    "mode": "light",
+    "font": "sans-serif"
+  },
+  {
+    "id": "broader",
+    "heading": "The Poverty Premium",
+    "text": "This 'Poverty Premium' exists everywhere. From high-interest payday loans to the inability to buy in bulk, those with the least are often forced to pay the most.",
+    "mode": "light",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "text": "For more such explainer videos follow EulerFold and visit eulerfold dot com to get the latest learning resources.",
+    "mode": "light",
+    "font": "sans-serif"
+  }
+]
