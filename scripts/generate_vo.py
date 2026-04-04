@@ -7,6 +7,16 @@ import sys
 VOICE = "en-US-SteffanNeural"
 
 def generate_vo_segment(id, text, output_path):
+    if not text or not text.strip():
+        print(f"Generating silent VO for {id} (empty text)...")
+        # Generate 1 second of silence if text is empty
+        command = [
+            "ffmpeg", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", 
+            "-t", "1", "-q:a", "9", "-acodec", "libmp3lame", output_path, "-y"
+        ]
+        subprocess.run(command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return
+
     print(f"Generating VO for {id}...")
     command = [
         "edge-tts",

@@ -37,18 +37,19 @@ This document serves as the foundational brief and set of instructions for all v
 ## 3. Technical Implementation
 ### Audio & Sync
 - **VO Generation:** Use `edge-tts` before rendering.
-- **Timing:** Derived from audio duration. Visual reveals for a segment must complete ~0.5s before the audio ends.
+- **Visual-only Segments:** For segments with no VO (e.g., outro), `generate_vo.py` automatically produces a 1s silent MP3 using `ffmpeg`.
+- **Timing:** Derived from audio duration via `analyze_audio.py`. Visual reveals for a segment must complete ~0.5s before the audio ends.
 - **Process:** Measure audio duration and calculate frame counts *before* writing animation code.
 
-### 3D Elements (Three.js)
-- **Usage:** Only when spatial understanding is required (e.g., neural nets, geometry).
-- **Aesthetic:** Wireframe or low-poly. Teal mesh. Soft ambient lighting.
-- **Containment:** Render inside a container; the paper background must remain visible around the 3D canvas.
+### Visual Components & Performance
+- **SVG vs Canvas:** Prefer SVG-based Rough.js components (using `rough.generator()`) over Canvas for Remotion. SVG is more declarative, faster to render, and less CPU-intensive.
+- **Responsiveness:** Components must use relative coordinates (based on `width`/`height` props) to scale correctly across different container sizes.
+- **3D Elements (Three.js):** Only when spatial understanding is required. Render inside a container; the paper background must remain visible.
 
 ### Logo & Watermark
-- **Placement:** Bottom-right corner throughout.
-- **Opacity:** 10% (Light Mode), 15% (Dark Mode).
-- **Outro:** Full opacity wordmark centered with a teal underline drawing in.
+- **Placement:** Top-right corner throughout (Watermark), centered in Outro.
+- **Assets:** Use `logo.svg` for light mode and `logo-dark.svg` (lighter text) for dark mode.
+- **Opacity:** High visibility (0.7-0.8) for the primary brand mark.
 
 ## 4. Execution Workflow (New Video Generation)
 
@@ -58,46 +59,47 @@ To generate a new video from scratch, follow these steps in order:
 Create a new folder in `videos/` (e.g., `videos/my-new-topic/`).
 Define the script in `videos/my-new-topic/script.json`.
 - **id**: Unique identifier.
-- **heading**: Heading for the segment (NEW).
-- **text**: The exact narration script.
+- **heading**: Heading for the segment.
+- **text**: The exact narration script (leave empty/whitespace for visual-only).
 - **mode**: "light" or "dark".
 - **font**: "serif" or "sans-serif".
 
 ### Step 2: Generate Voiceover
-Run the VO generation script:
+Run the VO generation script (handles silent segments automatically):
 ```bash
 python3 scripts/generate_vo.py videos/my-new-topic
 ```
-Individual MP3 files will be produced in `videos/my-new-topic/audio/`.
 
 ### Step 3: Analyze Audio Durations
 Run the audio analysis script:
 ```bash
 python3 scripts/analyze_audio.py videos/my-new-topic
 ```
-Produces the synchronized `videos/my-new-topic/timing.json`.
 
 ### Step 4: Implement Visual Logic
 - Choose or create a metaphor component in `src/metaphors/`.
-- Update `src/Main.tsx` to include the new metaphor if needed.
+- Update `src/Main.tsx` router to include the new metaphor.
 
 ### Step 5: Execute Render Pipeline
-Run the master render script:
+Run the master render script (Locally preferred):
 ```bash
 ./render.sh videos/my-new-topic
 ```
-This script handles symlinking the active video, Fedora-specific Xvfb setup, and Chromium flags.
 
 ## 5. Directory Structure
 - `videos/`: Each subfolder contains video-specific data (script, timing, audio).
-- `src/metaphors/`: Metaphor-specific visual components (e.g., `CellSystem.tsx`).
+- `src/metaphors/`: Metaphor-specific visual components (e.g., `PvSNP.tsx`).
 - `src/components/`: Reusable generic components (e.g., `DrawnLine.tsx`, `StaggeredText.tsx`).
 - `src/Main.tsx`: Generic video container that consumes segment data.
 - `src/data/active_video.json`: Symlink pointing to the current video's timing data.
 
-## 5. Visual Meaning
+## 6. Visual Meaning
 Visuals must carry meaning independently of narration. If a viewer mutes the video, they should still grasp the core mental model. Decoration without meaning is prohibited.
 
-## 6. Stability Notes (Fedora/Linux)
-- **Subprocess Error:** If you see `Failed global descriptor lookup: 7`, Chromium is spawning subprocesses that conflict with Xvfb. Ensure `--browser-executable` is explicitly set to the Chromium binary and `CHROMIUM_FLAGS` includes `--single-process` and `--no-zygote`.
+## 7. Stability & Rendering Notes
+- **Fedora/Linux:** Use `--browser-executable` and `CHROMIUM_FLAGS` (`--single-process`, `--no-zygote`) to prevent Xvfb conflicts.
+- **GCloud Rendering (Ubuntu 22.04):**
+  - Requires Node.js v20+ (for `node:fs` support).
+  - Install `google-chrome-stable`, `xvfb`, `ffmpeg`, and `time`.
+  - Use `concurrency=2` (or match `nproc`) in `render.sh` for speed.
 - **JSON Imports:** Use standard `import x from './file.json'` syntax. Modern `with { type: 'json' }` syntax may crash the `esbuild` loader in Remotion 4.0.

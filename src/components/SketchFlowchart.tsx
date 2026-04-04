@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useMemo } from "react";
 import rough from 'roughjs/bin/rough';
 import { useCurrentFrame, useVideoConfig, interpolate, spring } from 'remotion';
 import { Theme } from '../styles/theme';
@@ -27,142 +27,125 @@ interface SketchFlowchartProps {
   duration?: number;
   title?: string;
   fontFamily?: string;
+  mode?: 'light' | 'dark';
 }
 
 export const SketchFlowchart: React.FC<SketchFlowchartProps> = ({
-  nodes = [
-    { id: "start", x: 150, y: 100, text: "Start", type: "oval" },
-    { id: "process", x: 150, y: 250, text: "Process", type: "rect" },
-    { id: "decision", x: 450, y: 250, text: "Decision", type: "diamond" },
-    { id: "end", x: 450, y: 450, text: "End", type: "oval" }
-  ],
-  edges = [
-    { from: "start", to: "process" },
-    { from: "process", to: "decision" },
-    { from: "decision", to: "end" }
-  ],
+  nodes = [],
+  edges = [],
   width = 800,
   height = 600,
-  color = Theme.colors.light.accent,
+  color,
   delay = 0,
   duration = 120,
   title = "Flow Logic",
-  fontFamily = "sans-serif"
+  fontFamily = "sans-serif",
+  mode = 'light'
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const theme = mode === 'dark' ? Theme.colors.dark : Theme.colors.light;
+  const accentColor = color || theme.accent;
+  const textColor = mode === 'dark' ? '#ffffff' : theme.text;
+  const edgeColor = mode === 'dark' ? '#d1d5db' : theme.neutral;
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const rc = rough.canvas(canvas);
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+  const t = frame - delay;
 
-    ctx.clearRect(0, 0, width, height);
+  const generator = useMemo(() => rough.generator(), []);
 
-    const t = frame - delay;
-    if (t < 0) return;
+  const nodeW = 140;
+  const nodeH = 60;
 
-    const nodeW = 140;
-    const nodeH = 60;
-
-    const options = {
-      seed: 1,
-      stroke: Theme.colors.light.text,
-      strokeWidth: 2,
-      roughness: 1.5,
-    };
-
-    const accentOptions = {
-        ...options,
-        stroke: color,
-        fill: color,
-        fillOpacity: 0.1,
+  const renderedNodes = useMemo(() => {
+    return nodes.map((n, i) => {
+      const options = {
+        seed: 1,
+        stroke: textColor,
+        strokeWidth: 2,
+        roughness: 1.5,
+        fill: accentColor,
+        fillOpacity: 0.2,
         fillStyle: 'hachure'
-    };
+      };
 
-    // Draw nodes
-    nodes.forEach((n, i) => {
-        const nodeDelay = i * 15;
-        const s = spring({ fps, frame: t - nodeDelay, config: { damping: 12 } });
-        if (s <= 0) return;
-
-        const x = n.x;
-        const y = n.y;
-        const w = nodeW * s;
-        const h = nodeH * s;
-
-        if (n.type === 'rect') {
-            rc.rectangle(x - w/2, y - h/2, w, h, accentOptions);
-        } else if (n.type === 'oval') {
-            rc.ellipse(x, y, w, h, accentOptions);
-        } else if (n.type === 'diamond') {
-            rc.polygon([
-                [x, y - h/2],
-                [x + w/2, y],
-                [x, y + h/2],
-                [x - w/2, y]
-            ], accentOptions);
-        }
-
-        // Text
-        ctx.save();
-        ctx.font = `600 ${20 * s}px ${fontFamily}`;
-        ctx.fillStyle = Theme.colors.light.text;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.globalAlpha = s;
-        ctx.fillText(n.text, x, y);
-        ctx.restore();
+      let shape;
+      if (n.type === 'rect') {
+        shape = generator.rectangle(-nodeW/2, -nodeH/2, nodeW, nodeH, options);
+      } else if (n.type === 'oval') {
+        shape = generator.ellipse(0, 0, nodeW, nodeH, options);
+      } else {
+        shape = generator.polygon([
+          [0, -nodeH/2],
+          [nodeW/2, 0],
+          [0, nodeH/2],
+          [-nodeW/2, 0]
+        ], options);
+      }
+      return { ...n, shape, delay: i * 15 };
     });
-
-    // Draw edges
-    edges.forEach((e, i) => {
-        const n1 = nodes.find(n => n.id === e.from);
-        const n2 = nodes.find(n => n.id === e.to);
-        if (!n1 || !n2) return;
-
-        const edgeDelay = nodes.length * 15 + i * 20;
-        const progress = interpolate(t, [edgeDelay, edgeDelay + 20], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-        
-        if (progress <= 0) return;
-
-        // Start from node boundaries (approx)
-        const dx = n2.x - n1.x;
-        const dy = n2.y - n1.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        // Offset start/end to not overlap center
-        const offset = 40;
-        const x1 = n1.x + (dx / dist) * offset;
-        const y1 = n1.y + (dy / dist) * offset;
-        const x2 = n2.x - (dx / dist) * offset;
-        const y2 = n2.y - (dy / dist) * offset;
-
-        const targetX = x1 + (x2 - x1) * progress;
-        const targetY = y1 + (y2 - y1) * progress;
-
-        rc.line(x1, y1, targetX, targetY, { ...options, stroke: Theme.colors.light.neutral });
-
-        // Arrowhead
-        if (progress >= 1) {
-            const angle = Math.atan2(y2 - y1, x2 - x1);
-            const headLen = 15;
-            rc.line(x2, y2, x2 - headLen * Math.cos(angle - 0.4), y2 - headLen * Math.sin(angle - 0.4), options);
-            rc.line(x2, y2, x2 - headLen * Math.cos(angle + 0.4), y2 - headLen * Math.sin(angle + 0.4), options);
-        }
-    });
-
-  }, [frame, delay, nodes, edges, width, height, color, fps, fontFamily]);
+  }, [nodes, theme, accentColor, generator, textColor]);
 
   return (
-    <div style={{ position: 'relative', width, height, filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.05))' }}>
+    <div style={{ position: 'relative', width, height }}>
       <div style={{ position: 'absolute', top: -60, width: '100%', textAlign: 'center' }}>
-         <StaggeredText text={title} fontSize={36} color={Theme.colors.light.text} delay={delay} />
+         <StaggeredText text={title} fontSize={36} color={textColor} delay={delay} />
       </div>
-      <canvas ref={canvasRef} width={width} height={height} />
+      
+      <svg width={width} height={height} style={{ overflow: 'visible' }}>
+        {/* Draw Edges */}
+        {edges.map((e, i) => {
+          const n1 = nodes.find(n => n.id === e.from);
+          const n2 = nodes.find(n => n.id === e.to);
+          if (!n1 || !n2) return null;
+
+          const edgeDelay = nodes.length * 15 + i * 20;
+          const progress = interpolate(t, [edgeDelay, edgeDelay + 20], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+          if (progress <= 0) return null;
+
+          const dx = n2.x - n1.x;
+          const dy = n2.y - n1.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const offset = 40;
+          const x1 = n1.x + (dx / dist) * offset;
+          const y1 = n1.y + (dy / dist) * offset;
+          const x2 = n2.x - (dx / dist) * offset;
+          const y2 = n2.y - (dy / dist) * offset;
+
+          const targetX = x1 + (x2 - x1) * progress;
+          const targetY = y1 + (y2 - y1) * progress;
+
+          const line = generator.line(x1, y1, targetX, targetY, { stroke: edgeColor, strokeWidth: 2, roughness: 1, seed: i });
+          
+          return (
+            <g key={`edge-${i}`}>
+              {generator.toPaths(line).map((p, pi) => <path key={pi} d={p.d} stroke={edgeColor} fill="none" />)}
+            </g>
+          );
+        })}
+
+        {/* Draw Nodes */}
+        {renderedNodes.map((n, i) => {
+          const s = spring({ fps, frame: t - n.delay, config: { damping: 12 } });
+          if (s <= 0) return null;
+
+          return (
+            <g key={n.id} transform={`translate(${n.x}, ${n.y}) scale(${s})`}>
+              {generator.toPaths(n.shape).map((p, pi) => (
+                <path key={pi} d={p.d} stroke={textColor} fill={p.fill || 'none'} strokeWidth={2} />
+              ))}
+              <text 
+                textAnchor="middle" 
+                dominantBaseline="auto" 
+                fill={textColor} 
+                y={-nodeH/2 - 12}
+                style={{ fontFamily, fontSize: 24, fontWeight: 900, pointerEvents: 'none' }}
+              >
+                {n.text}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
     </div>
   );
 };

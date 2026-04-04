@@ -5,6 +5,8 @@ import math
 import sys
 
 def get_audio_duration(file_path):
+    if os.path.getsize(file_path) == 0:
+        return 1.0
     command = [
         "ffprobe",
         "-v", "error",
@@ -12,8 +14,11 @@ def get_audio_duration(file_path):
         "-of", "default=noprint_wrappers=1:nokey=1",
         file_path
     ]
-    result = subprocess.run(command, capture_output=True, text=True, check=True)
-    return float(result.stdout.strip())
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, check=True)
+        return float(result.stdout.strip())
+    except Exception:
+        return 1.0
 
 def main():
     if len(sys.argv) < 2:

@@ -21,6 +21,7 @@ START_TIME=$(date +%s)
 /usr/bin/time --verbose xvfb-run --auto-servernum --server-args="-screen 0 1080x1920x24" \
   npx remotion render src/index.tsx ComponentShowcase out/demo_vertical.mp4 \
   --browser-executable=/usr/bin/google-chrome \
+  --concurrency=2 \
   --no-sandbox \
   --disable-dev-shm-usage 2>&1 | tee render.log
 

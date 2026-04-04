@@ -89,8 +89,9 @@ Mute the video and watch it. If the core idea is not communicated by the visuals
 
 ### Animation principles:
 - Every moving element must represent something real. No motion for motion's sake.
-- The central visual metaphor should be established in Segment 1 and *evolved* across segments — not replaced. The viewer builds a mental model; switching metaphors mid-video breaks it.
-- Transitions between segments: cell animation continues uninterrupted. Only text layers transition.
+- **Component Architecture:** Prefer SVG-based components (using `Rough.js` generator) over Canvas. This ensures high-fidelity rendering, better CPU performance, and easier styling in Remotion.
+- **Responsiveness:** Ensure custom components (Cars, Monitors, etc.) use relative sizing to fit inside any `SketchyBox`.
+- The central visual metaphor should be established in Segment 1 and *evolved* across segments — not replaced.
 
 ### Text rules:
 - Heading: 72–80px, weight 800, letter-spacing -0.02em
@@ -111,15 +112,23 @@ Mute the video and watch it. If the core idea is not communicated by the visuals
 ## Phase 4: Audio and Timing
 
 ### Voiceover style:
-- Conversational, not academic. Write how you speak, not how you write.
+- Conversational, not academic. 
+- **Visual-Only Segments:** For segments without VO, the system automatically generates a 1s silent baseline baseline to maintain pipeline integrity.
 - Each segment's VO should be speakable in the target duration at a natural pace (~140 words per minute).
-- No filler words. No "basically," "essentially," "kind of."
-- Read it aloud before finalizing. If you stumble, rewrite it.
 
 ### Timing system:
-- The `analyze_audio.py` script auto-generates `data/timing.json` from actual VO audio durations
-- The system automatically adds a 2-second hold to the outro segment for the CTA frame
-- Do not manually edit `timing.json` — always regenerate it from audio
+- The `analyze_audio.py` script auto-generates `timing.json` from actual VO audio durations.
+- It handles zero-byte files by defaulting to a 1s duration.
+- The system automatically adds a 2-second hold to the outro segment for the CTA frame.
+- Do not manually edit `timing.json` — always regenerate it from audio.
+
+---
+
+## Phase 5: Rendering
+
+### Compute Paths:
+- **Local (Preferred):** Use `render.sh` with Chrome and Xvfb. This is currently the most stable and tested path.
+- **GCloud (Compute Engine):** Supported path on Ubuntu 22.04. Requires Node v20+, Chrome, and FFmpeg. Use `concurrency` matching `nproc` for optimized throughput.
 
 ### Audio sync rule:
 Total video duration = sum of all VO segment durations + 2s CTA hold. Verify with:

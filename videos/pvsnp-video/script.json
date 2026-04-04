@@ -1,0 +1,58 @@
+[
+  {
+    "id": "hook",
+    "heading": "The $1 Million Mystery",
+    "text": "In 1995, a background gag in The Simpsons showed the equation P equals NP. To most, it was a geeky joke. To mathematicians, it was a sign of the impossible. This is the P versus NP problem—a one-million-dollar mystery that defines the very limits of what computers can do.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "p_def",
+    "heading": "P: The Solvable",
+    "text": "First, meet P. These are problems a computer can solve efficiently in 'polynomial time'. Think of sorting a playlist or finding the quickest route home. As the problem gets bigger, the time it takes grows at a manageable pace. P is the world of the easy and the practical.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "np_def",
+    "heading": "NP: The Verifiable",
+    "text": "Then there's NP. These problems are different. We don't know if we can solve them quickly, but if someone hands you a solution, you can verify it in a flash. Imagine a complex lock. Picking it might take years of trial and error, but if you have the key, opening it takes a second. That's the essence of NP.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "asymmetry",
+    "heading": "The Exponential Wall",
+    "text": "The gap between 'solving' and 'verifying' is a vertical wall. For a problem with just 100 elements, a polynomial algorithm might take seconds. But an exponential one? It would take three hundred quintillion years—longer than the universe has existed. This is the wall that secures your bank account and every secret on the internet.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "np_complete",
+    "heading": "The Magic Link",
+    "text": "But here's the mind-bending part: NP-Completeness. Thousands of famous problems—from Sudoku and protein folding to the Traveling Salesman—are secretly the same. They are all connected. If you find an efficient way to solve just one of them, you solve every single one of them instantly.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "impact",
+    "heading": "If P = NP...",
+    "text": "If P actually equals NP, our world breaks and rebuilds. All current encryption collapses. But in its place, we get perfect logistics, cured diseases through simulated protein folding, and an AI that can solve any logical puzzle. The impossible becomes trivial.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "consensus",
+    "heading": "The Human Element",
+    "text": "99% of experts believe P does not equal NP. They believe that 'insight' is more than just fast computation—that some things are truly hard. But until someone proves it, the million-dollar prize remains, and the wall still stands.",
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "P vs NP",
+    "text": " ",
+    "mode": "dark",
+    "font": "sans-serif"
+  }
+]

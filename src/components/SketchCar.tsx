@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import rough from 'roughjs/bin/rough';
-import { useCurrentFrame, useVideoConfig, interpolate } from 'remotion';
+import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { Theme } from '../styles/theme';
 
 interface SketchCarProps {
@@ -12,15 +12,14 @@ interface SketchCarProps {
 }
 
 export const SketchCar: React.FC<SketchCarProps> = ({ 
-  width = 800, 
-  height = 400, 
+  width = 400, 
+  height = 200, 
   color = Theme.colors.light.accent,
   speed = 4,
   delay = 0
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -33,26 +32,33 @@ export const SketchCar: React.FC<SketchCarProps> = ({
 
     // Animation logic
     const t = Math.max(0, frame - delay);
-    const carWidth = 180;
+    
+    // Scale factor for car elements
+    const scale = width / 400;
+    const carWidth = 160 * scale;
+    const carHeight = 100 * scale;
+    
     // Calculate X position with looping logic
     let x = (t * speed) % (width + carWidth) - carWidth;
+    let groundY = height * 0.8;
 
     const options = {
       seed: 1,
       roughness: 1.5,
       stroke: Theme.colors.light.text,
-      strokeWidth: 2,
+      strokeWidth: 2 * scale,
     };
 
     // Draw Road
-    rc.line(0, 240, width, 242, {
+    rc.line(0, groundY + 5, width, groundY + 7, {
       ...options,
       stroke: Theme.colors.light.neutral,
       opacity: 0.4
     });
 
     // 1. Body
-    rc.rectangle(x, 180, 160, 45, {
+    const bodyY = groundY - 40 * scale;
+    rc.rectangle(x, bodyY, 160 * scale, 40 * scale, {
       ...options,
       fill: color,
       fillStyle: 'hachure',
@@ -61,7 +67,8 @@ export const SketchCar: React.FC<SketchCarProps> = ({
     });
 
     // 2. Top
-    rc.rectangle(x + 35, 140, 90, 40, {
+    const topY = bodyY - 35 * scale;
+    rc.rectangle(x + 35 * scale, topY, 90 * scale, 35 * scale, {
       ...options,
       fill: color,
       fillStyle: 'hachure',
@@ -75,22 +82,23 @@ export const SketchCar: React.FC<SketchCarProps> = ({
         fill: '#93c5fd',
         fillOpacity: 0.3,
         fillStyle: 'solid',
-        strokeWidth: 1
+        strokeWidth: 1 * scale
     };
-    rc.rectangle(x + 40, 145, 35, 30, windowOptions);
-    rc.rectangle(x + 85, 145, 30, 30, windowOptions);
+    rc.rectangle(x + 40 * scale, topY + 5 * scale, 35 * scale, 25 * scale, windowOptions);
+    rc.rectangle(x + 85 * scale, topY + 5 * scale, 30 * scale, 25 * scale, windowOptions);
 
     // 4. Wheels
-    const wheelY = 225;
-    [x + 35, x + 125].forEach(wx => {
+    const wheelY = groundY - 10 * scale;
+    const wheelRadius = 30 * scale;
+    [x + 35 * scale, x + 125 * scale].forEach(wx => {
       // Outer tire
-      rc.circle(wx, wheelY, 35, {
+      rc.circle(wx, wheelY, wheelRadius, {
         ...options,
         fill: Theme.colors.light.text,
         fillStyle: 'solid'
       });
       // Inner rim
-      rc.circle(wx, wheelY, 15, {
+      rc.circle(wx, wheelY, 12 * scale, {
         ...options,
         fill: Theme.colors.light.neutral,
         fillStyle: 'solid',
@@ -100,18 +108,18 @@ export const SketchCar: React.FC<SketchCarProps> = ({
       // Hubcap detail (spinning effect)
       const rotation = t * 0.2;
       rc.line(
-          wx + Math.cos(rotation) * 10, 
-          wheelY + Math.sin(rotation) * 10,
-          wx - Math.cos(rotation) * 10,
-          wheelY - Math.sin(rotation) * 10,
-          { ...options, stroke: '#fff', strokeWidth: 1 }
+          wx + Math.cos(rotation) * 8 * scale, 
+          wheelY + Math.sin(rotation) * 8 * scale,
+          wx - Math.cos(rotation) * 8 * scale,
+          wheelY - Math.sin(rotation) * 8 * scale,
+          { ...options, stroke: '#fff', strokeWidth: 1 * scale }
       );
     });
 
   }, [frame, delay, width, height, color, speed]);
 
   return (
-    <div style={{ filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.1))' }}>
+    <div style={{ filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))' }}>
         <canvas ref={canvasRef} width={width} height={height} />
     </div>
   );
