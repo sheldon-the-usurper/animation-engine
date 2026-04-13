@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hook",
+    "heading": "Market Fragility",
+    "subheading": "The Math of Black Monday",
+    "info": "Volatility is not the same as instability.",
+    "text": "Financial markets are often volatile, but volatility is not the same as instability. Weeks before the Black Monday crash of 1987, the internal mathematics of the market shifted. The system became 'sluggish,' losing its ability to absorb small shocks—a classic sign of a system nearing a bifurcation point.",
+    "mode": "dark"
+  },
+  {
+    "id": "discovery",
+    "heading": "Statistical Flickers",
+    "subheading": "The Lehman Signal",
+    "info": "Rising variance detected months before the 2008 crash.",
+    "text": "Using persistent homology, researchers found rising variance and skewness in the 2000 Dot-com bubble and the 2008 Lehman Brothers bankruptcy. These aren't just market fluctuations; they are the mathematical fingerprints of a system that has 'remembered' its recent state too well, becoming rigid and prone to collapse.",
+    "mode": "dark"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Bifurcation Points",
+    "subheading": "The Physics of Panic",
+    "info": "As restorative force drops, noise becomes signal.",
+    "text": "In a healthy market, negative feedback loops correct prices. But as a crisis approaches, these loops weaken. The 'basin' of market stability becomes shallow, and small disturbances—like a single bank's failure—can push the system over the edge into a new, lower-value state from which it cannot easily return.",
+    "mode": "dark"
+  },
+  {
+    "id": "sowhat",
+    "heading": "The Crisis Paradox",
+    "subheading": "Social Feedback Loops",
+    "info": "Information itself can trigger the tipping point.",
+    "text": "There is a cruel paradox in human systems. If an early warning signal is detected, the very act of reporting it can cause a self-fulfilling prophecy. When participants see the signal, their collective fear accelerates the collapse. In finance, the math of the warning is also the math of the trigger.",
+    "mode": "dark"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "mode": "dark"
+  }
+]

@@ -9,6 +9,7 @@ interface SketchDNNProps {
   delay?: number;
   duration?: number;
   layers?: number[];
+  mode?: 'light' | 'dark';
 }
 
 export const SketchDNN: React.FC<SketchDNNProps> = ({
@@ -16,11 +17,13 @@ export const SketchDNN: React.FC<SketchDNNProps> = ({
   height = 600,
   delay = 0,
   duration = 180,
-  layers = [3, 4, 4, 2]
+  layers = [3, 4, 4, 2],
+  mode = 'light'
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const theme = mode === 'dark' ? Theme.colors.dark : Theme.colors.light;
 
   const progress = spring({ fps, frame: frame - delay, config: { damping: 20 } });
 
@@ -52,10 +55,10 @@ export const SketchDNN: React.FC<SketchDNNProps> = ({
       layer.forEach(a => {
         positions[i + 1].forEach(b => {
           rc.line(a.x, a.y, b.x, b.y, {
-            stroke: '#cbd5e1',
+            stroke: theme.neutral,
             strokeWidth: 1,
             roughness: 1,
-            opacity: 0.2 * progress,
+            opacity: 0.3 * progress,
             seed: 1
           });
         });
@@ -67,9 +70,9 @@ export const SketchDNN: React.FC<SketchDNNProps> = ({
       const isOutput = i === layers.length - 1;
       layer.forEach(node => {
         rc.circle(node.x, node.y, 18 * progress, {
-          fill: isOutput ? Theme.colors.light.accent : Theme.colors.light.text,
+          fill: isOutput ? theme.accent : theme.text,
           fillStyle: 'solid',
-          stroke: Theme.colors.light.text,
+          stroke: theme.text,
           strokeWidth: 1.5,
           roughness: 1.5,
           seed: 1
@@ -94,9 +97,9 @@ export const SketchDNN: React.FC<SketchDNNProps> = ({
           const py = a.y + (b.y - a.y) * pulseProgress;
 
           rc.circle(px, py, 10 * progress, {
-            fill: Theme.colors.light.accent,
+            fill: theme.accent,
             fillStyle: 'solid',
-            stroke: Theme.colors.light.accent,
+            stroke: theme.accent,
             strokeWidth: 1,
             roughness: 1,
             opacity: interpolate(pulseProgress, [0, 0.8, 1], [0, 1, 0]),
@@ -105,7 +108,7 @@ export const SketchDNN: React.FC<SketchDNNProps> = ({
       });
     });
 
-  }, [frame, delay, width, height, progress, positions, layers]);
+  }, [frame, delay, width, height, progress, positions, layers, theme]);
 
   return (
     <div style={{ position: 'relative', width, height }}>

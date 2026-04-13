@@ -1,0 +1,127 @@
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:1rem 0">
+
+<div>
+<div style="font-size:13px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)">PDE solving accuracy</div>
+<div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:10px)">MSE (lower = better)</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:11px;color:var(--color-text-secondary)">
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#3266ad"></span>MLP (4-layer, 100 wide)</span>
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>KAN (2-layer, 10 wide)</span>
+</div>
+<div style="position:relative;height:200px"><canvas id="pdeChart"></canvas></div>
+</div>
+
+<div>
+<div style="font-size:13px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)">Parameter efficiency</div>
+<div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:10px">Parameters needed for comparable accuracy</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:11px;color:var(--color-text-secondary)">
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#3266ad"></span>MLP</span>
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>KAN</span>
+</div>
+<div style="position:relative;height:200px"><canvas id="paramChart"></canvas></div>
+</div>
+
+<div>
+<div style="font-size:13px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)">Scaling laws (test loss)</div>
+<div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:10px">KAN improves faster with more params</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:11px;color:var(--color-text-secondary)">
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#3266ad"></span>MLP</span>
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>KAN</span>
+</div>
+<div style="position:relative;height:200px"><canvas id="scalingChart"></canvas></div>
+</div>
+
+<div>
+<div style="font-size:13px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)">Training speed</div>
+<div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:10px">Relative training time (MLP = 1×)</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:11px;color:var(--color-text-secondary)">
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#3266ad"></span>MLP</span>
+  <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75"></span>KAN</span>
+</div>
+<div style="position:relative;height:200px"><canvas id="speedChart"></canvas></div>
+</div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gridColor = 'rgba(136,135,128,0.15)';
+const baseOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+  scales: {
+    x: { grid: { color: gridColor }, ticks: { font: { size: 11 } } },
+    y: { grid: { color: gridColor }, ticks: { font: { size: 11 } } }
+  }
+};
+
+new Chart(document.getElementById('pdeChart'), {
+  type: 'bar',
+  data: {
+    labels: ['MLP\n(10K params)', 'KAN\n(100 params)'],
+    datasets: [{
+      data: [1e-5, 1e-7],
+      backgroundColor: ['#3266ad', '#1D9E75']
+    }]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { font: { size: 10 } } },
+      y: { type: 'logarithmic', grid: { color: gridColor }, ticks: { font: { size: 10 },
+        callback: v => v === 1e-5 ? '1e-5' : v === 1e-6 ? '1e-6' : v === 1e-7 ? '1e-7' : ''
+      }}
+    }
+  }
+});
+
+new Chart(document.getElementById('paramChart'), {
+  type: 'bar',
+  data: {
+    labels: ['MLP', 'KAN'],
+    datasets: [{
+      data: [10000, 100],
+      backgroundColor: ['#3266ad', '#1D9E75']
+    }]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: gridColor }, ticks: { font: { size: 10 }, callback: v => v.toLocaleString() }}
+    }
+  }
+});
+
+new Chart(document.getElementById('scalingChart'), {
+  type: 'line',
+  data: {
+    labels: ['100', '500', '1K', '5K', '10K'],
+    datasets: [
+      { label: 'MLP', data: [0.8, 0.55, 0.42, 0.30, 0.24], borderColor: '#3266ad', backgroundColor: 'transparent', tension: 0.3 },
+      { label: 'KAN', data: [0.65, 0.38, 0.22, 0.10, 0.06], borderColor: '#1D9E75', backgroundColor: 'transparent', tension: 0.3 }
+    ]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { title: { display: true, text: 'params', font: { size: 10 } }, grid: { color: gridColor }, ticks: { font: { size: 10 } } },
+      y: { title: { display: true, text: 'test loss', font: { size: 10 } }, grid: { color: gridColor }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('speedChart'), {
+  type: 'bar',
+  data: {
+    labels: ['MLP', 'KAN (original)', 'FastKAN'],
+    datasets: [{
+      data: [1, 10, 2],
+      backgroundColor: ['#3266ad', '#1D9E75', '#9FE1CB']
+    }]
+  },
+  options: { ...baseOpts,
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { font: { size: 10 } } },
+      y: { grid: { color: gridColor }, ticks: { font: { size: 10 }, callback: v => v + '×' }}
+    }
+  }
+});
+</script>

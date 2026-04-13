@@ -1,5 +1,16 @@
 export const Theme = {
   colors: {
+    kurzgesagt: {
+      yellow: '#fde047',
+      orange: '#fb923c',
+      pink: '#f472b6',
+      cyan: '#22d3ee',
+      lime: '#a3e635',
+      red: '#f87171',
+      blue: '#60a5fa',
+      purple: '#c084fc',
+    },
+    teal: '#0F766E',
     light: {
       paper: '#f0f7f6',   // Mint-tinted paper
       text: '#1a2e2c',    // Dark teal-black
@@ -8,11 +19,11 @@ export const Theme = {
       border: '#0F766E',
     },
     dark: {
-      paper: '#2A2A28',   // Requested Warmer Charcoal
-      text: '#ffffff',    // Pure white for maximum contrast
-      neutral: '#d1d5db', // Bright gray for subtext
-      accent: '#2dd4bf',  // Vibrant Teal-400
-      border: '#5eead4',  // Teal-300 for outlines
+      paper: '#1a1a1a',   // Deeper Charcoal
+      text: '#f9fafb',    // Off-white
+      neutral: '#d1d5db', // Bright gray
+      accent: '#fde047',  // Vibrant Yellow-400 as default accent
+      border: '#fef08a',  // Yellow-300 for outlines
     }
   },
   animation: {

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hook",
+    "heading": "Inside You",
+    "subheading": "The Biology of Failure",
+    "info": "A heart attack is a mathematical state shift.",
+    "text": "The same equation that describes a dying lake also describes your own body. Seizures, heart attacks, and deep depression aren't just 'events'—they are critical transitions in the biological network. Your body is a complex system that sends a warning long before it fails.",
+    "mode": "dark"
+  },
+  {
+    "id": "discovery",
+    "heading": "Internal Flickers",
+    "subheading": "Epileptic Pre-Signals",
+    "info": "Rising EEG variance detected hours before seizures.",
+    "text": "Hours before an epileptic seizure, the brain's EEG signals begin to shift. The variance rises, and the 'autocorrelation'—the signal's memory of its previous state—increases. The brain is literally slowing down its recovery from neural noise, flickering as it approaches the tipping point.",
+    "mode": "dark"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Mood Dynamics",
+    "subheading": "The Depression Bifurcation",
+    "info": "Emotional variance spikes before a systemic shift.",
+    "text": "This math even applies to the human mind. Research shows that mood variance increases significantly before a depressive episode. The psychological system loses its 'restorative force,' taking longer to bounce back from small negative events until it tips into a stable, low-mood state.",
+    "mode": "dark"
+  },
+  {
+    "id": "sowhat",
+    "heading": "Personal Resilience",
+    "subheading": "The Heart's Whisper",
+    "info": "Math is giving us the tools to listen.",
+    "text": "Your biology is generous enough to warn you. By monitoring heart rate variability and neural signals for Critical Slowing Down, we can intervene before the system breaks. The goal is to detect the whisper of the flicker before it becomes the scream of the collapse.",
+    "mode": "dark"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "mode": "dark"
+  }
+]

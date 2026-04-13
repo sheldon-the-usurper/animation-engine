@@ -3,8 +3,8 @@ import os
 import subprocess
 import sys
 
-# Voice options for EulerFold brand (Calm, precise, warm)
-VOICE = "en-US-SteffanNeural"
+# Voice options for EulerFold brand (Enthusiastic, Kurzgesagt-style)
+VOICE = "en-US-AvaMultilingualNeural"
 
 def generate_vo_segment(id, text, output_path):
     if not text or not text.strip():

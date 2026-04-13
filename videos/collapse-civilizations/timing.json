@@ -1,0 +1,67 @@
+[
+  {
+    "id": "hook",
+    "heading": "The Tainter Curve",
+    "subheading": "The Law of Complexity",
+    "info": "Solving problems eventually costs more than the reward.",
+    "text": "Joseph Tainter discovered that civilizations reach a mathematical threshold where solving problems costs more than the problems are worth.",
+    "audio_path": "videos/collapse-civilizations/audio/hook.mp3",
+    "duration": 7.8,
+    "frames": 234,
+    "start_frame": 0,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "discovery",
+    "heading": "Roman Cashflow",
+    "subheading": "Imperial Overextension",
+    "info": "The army size grew faster than conquest returns.",
+    "text": "Roman historical data reveals a bending curve: they expanded to fund complexity, but the army size grew faster than the plunder could sustain.",
+    "audio_path": "videos/collapse-civilizations/audio/discovery.mp3",
+    "duration": 8.688,
+    "frames": 261,
+    "start_frame": 234,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Diminishing Returns",
+    "subheading": "The Thermodynamic Wall",
+    "info": "Every new bureaucratic layer yields smaller benefits.",
+    "text": "This is the law of diminishing returns. After a certain point, every new layer of bureaucracy actually yields a smaller increment of return.",
+    "audio_path": "videos/collapse-civilizations/audio/mechanism.mp3",
+    "duration": 9.216,
+    "frames": 277,
+    "start_frame": 495,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "sowhat",
+    "heading": "Thermodynamic Death",
+    "subheading": "Modern Parallels",
+    "info": "Complexity is a ratchet that only turns one way.",
+    "text": "Our modern social order is growing increasingly top-heavy. Bureaucracy doesn't just fail; it becomes a thermodynamic inevitability.",
+    "audio_path": "videos/collapse-civilizations/audio/sowhat.mp3",
+    "duration": 8.88,
+    "frames": 267,
+    "start_frame": 772,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "audio_path": "videos/collapse-civilizations/audio/outro.mp3",
+    "duration": 1.044898,
+    "frames": 92,
+    "start_frame": 1039,
+    "mode": "dark",
+    "font": "sans-serif"
+  }
+]

@@ -21,6 +21,9 @@ interface SketchChartProps {
   title?: string;
   maxValue?: number;
   showAxes?: boolean;
+  mode?: 'light' | 'dark';
+  xAxisLabel?: string;
+  yAxisLabel?: string;
 }
 
 export const SketchChart: React.FC<SketchChartProps> = ({
@@ -34,9 +37,13 @@ export const SketchChart: React.FC<SketchChartProps> = ({
   title,
   maxValue,
   showAxes = true,
+  mode = 'light',
+  xAxisLabel,
+  yAxisLabel,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const theme = mode === 'dark' ? Theme.colors.dark : Theme.colors.light;
 
   const padding = 60;
   const chartWidth = width - padding * 2;
@@ -82,7 +89,22 @@ export const SketchChart: React.FC<SketchChartProps> = ({
 
       {title && (
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <StaggeredText text={title} color={Theme.colors.light.text} fontSize={24} fontWeight={800} delay={delay} />
+          <StaggeredText text={title} color={theme.text} fontSize={24} fontWeight={800} delay={delay} />
+        </div>
+      )}
+
+      {yAxisLabel && (
+        <div style={{ 
+          position: 'absolute', 
+          left: 0,
+          top: '50%',
+          transform: 'translateY(-50%) rotate(-90deg)',
+          transformOrigin: 'left center',
+          width: 60,
+          textAlign: 'center',
+          pointerEvents: 'none'
+        }}>
+          <StaggeredText text={yAxisLabel} color={theme.neutral} fontSize={14} delay={delay + 10} />
         </div>
       )}
 
@@ -94,7 +116,7 @@ export const SketchChart: React.FC<SketchChartProps> = ({
               {/* Y Axis */}
               <PathReveal 
                 d={`M ${padding},${padding/2} L ${padding},${height - padding + 10}`} 
-                color={Theme.colors.light.neutral} 
+                color={theme.neutral} 
                 strokeWidth={2} 
                 delay={delay} 
                 duration={duration * 0.3} 
@@ -102,7 +124,7 @@ export const SketchChart: React.FC<SketchChartProps> = ({
               {/* X Axis */}
               <PathReveal 
                 d={`M ${padding - 10},${height - padding} L ${width - padding/2},${height - padding}`} 
-                color={Theme.colors.light.neutral} 
+                color={theme.neutral} 
                 strokeWidth={2} 
                 delay={delay + duration * 0.1} 
                 duration={duration * 0.3} 
@@ -193,13 +215,26 @@ export const SketchChart: React.FC<SketchChartProps> = ({
           <div key={i} style={{ width: chartWidth / data.length, textAlign: 'center' }}>
             <StaggeredText 
               text={d.label} 
-              color={Theme.colors.light.neutral} 
+              color={theme.neutral} 
               fontSize={14} 
               delay={delay + duration * 0.5 + i * 5} 
             />
           </div>
         ))}
       </div>
+
+      {xAxisLabel && (
+        <div style={{ 
+          position: 'absolute', 
+          bottom: 5, 
+          left: padding, 
+          width: chartWidth, 
+          textAlign: 'center',
+          pointerEvents: 'none'
+        }}>
+          <StaggeredText text={xAxisLabel} color={theme.neutral} fontSize={14} delay={delay + duration * 0.7} />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "hook_intro",
+    "heading": "The Most Convincing Thing in a Courtroom",
+    "text": "Imagine you're on a jury. The victim walks to the stand, looks the defendant in the eye, and says — clearly, calmly, with complete certainty — \"That's him. I will never forget that face.\" Late US Supreme Court Justice William Brennan once wrote: \"There is almost nothing more convincing than a live human being who takes the stand, points a finger at the defendant, and says, 'That's the one.'\"",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "hook_problem",
+    "heading": "The Reconstruction Problem",
+    "text": "And he was right. Jurors believe eyewitnesses. Judges believe eyewitnesses. Prosecutors build entire cases around them. There's just one problem: eyewitness testimony is, statistically, one of the least reliable forms of evidence we have. And decades of psychology research have proven it — but the courtroom hasn't caught up. Today we're going to go deep on why your memory of what you saw is not a recording. It's a reconstruction. And that reconstruction can be wrong — even when you're absolutely certain it's right.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "numbers_intro",
+    "heading": "How Bad Is the Problem, Really?",
+    "text": "Let's start with the scale of this. These numbers come from the Innocence Project — a nonprofit that uses DNA evidence to overturn wrongful convictions. In over 70 percent of DNA exonerations, eyewitness misidentification was a contributing factor. More than 375 people have been exonerated by DNA evidence in the US alone since 1989. On average, they spent 14 years wrongfully imprisoned before they were cleared.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "numbers_lineups",
+    "heading": "A Coin Flip With Failure",
+    "text": "In real police lineups — not lab experiments — one in three eyewitnesses who pick someone pick the wrong person. That's not a rare error. That's a coin flip with an extra chance of failure. And here's what makes this especially troubling: those wrong identifications are often delivered with complete confidence. The witness isn't guessing. They're certain. And that certainty is exactly what convinces a jury.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "numbers_evidence_chart",
+    "heading": "How Reliable Is Each Type of Evidence?",
+    "text": "The Innocence Project calls eyewitness misidentification \"the single greatest cause of wrongful convictions nationwide.\" To understand how this happens, we need to understand how memory actually works — because it's almost nothing like what most people assume.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "memory_camera",
+    "heading": "Memory Is Not a Camera",
+    "text": "Most people intuitively think of memory as a recording. Something happens, it gets stored, and when you remember it, you play it back. Like a video file. This is completely wrong. Memory is reconstructive. Every time you remember something, you're not retrieving a stored file — you're rebuilding the memory from fragments, filling in gaps with logic, expectation, and information you've picked up since the event. And each time you rebuild it, you can inadvertently change it.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "memory_wiki",
+    "heading": "The Wikipedia Analogy",
+    "text": "Think of a memory like a Wikipedia article. The original event is written once. But every time you access it, other people — other memories, experiences, things you've been told — can edit it. And crucially, the edits don't look like edits. The updated version just feels like the truth. There are three stages where memory can go wrong, and they map almost perfectly onto the stages of a criminal investigation.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "memory_stages",
+    "heading": "The Three Stages of Failure",
+    "text": "Acquisition: When you first witness something, your brain doesn't record everything. Stress narrows attention. Darkness reduces detail. Distance blurs faces. If there's a weapon involved — a gun, a knife — your eyes fixate on the weapon, not the person holding it. Researchers call this weapon focus. You saw the crime. You didn't necessarily see the criminal. Face recall accuracy drops by up to 25 percent when a weapon is present.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "memory_storage_retrieval",
+    "heading": "Storage and Retrieval",
+    "text": "Storage: Over time, memories fade and blur. But more dangerously, they can be contaminated. Talking to other witnesses, reading news coverage, seeing a photo in a lineup — all of these can insert new details into your memory. Retrieval: The act of remembering is itself a process that can change the memory. How questions are asked, who is in the room, the pressure you feel to identify someone — all of it affects what you report.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "loftus_intro",
+    "heading": "Elizabeth Loftus",
+    "text": "The researcher who almost single-handedly forced the legal system to take this seriously is a psychologist named Elizabeth Loftus. She's spent fifty years proving that memory is shockingly easy to manipulate. Her most famous experiment, done in 1974, is almost embarrassingly simple. She showed participants a video of a car accident. Then she asked them one question — with one tiny variation.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "loftus_hit_smash",
+    "heading": "Hit vs Smashed",
+    "text": "Half the participants were asked: \"How fast were the cars going when they hit each other?\" The other half: \"How fast were the cars going when they smashed into each other?\" Those who heard \"smashed\" gave significantly higher speed estimates. A week later, they were asked if they saw any broken glass. There was no broken glass in the video. But the people in the \"smashed\" group were twice as likely to remember seeing it. One word had planted a false detail into their memory.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "loftus_mall",
+    "heading": "Lost in the Mall",
+    "text": "This is the misinformation effect: when information you receive after an event gets woven into your memory. Loftus then ran a study called \"Lost in the Mall.\" Researchers convinced adult participants they had been lost in a shopping mall as a child — an event that never happened. About 25 percent of participants not only believed the false memory, but began elaborating on it — adding details, feelings, and sensory experiences for an event that never occurred.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "cotton_intro",
+    "heading": "The Case of Ronald Cotton",
+    "text": "Now let's talk about a real case. Jennifer Thompson was a college student when she was raped at knifepoint in her apartment. During the assault, she made a conscious, deliberate effort to memorize her attacker's face — she wanted to be able to identify him if she survived. She was described as the ideal eyewitness. Motivated, attentive, determined. She studied every feature.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "cotton_id",
+    "heading": "The Identification",
+    "text": "She identified Ronald Cotton from a photo lineup. Then from a physical lineup. She testified against him in court with complete certainty. He was convicted and sentenced to life in prison plus 54 years. Cotton insisted he was innocent, but no one believed him against such a powerful, certain eyewitness.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "cotton_exoneration",
+    "heading": "DNA and Exoneration",
+    "text": "In 1995 — eleven years later — DNA testing proved Cotton was innocent. The actual perpetrator was a man named Bobby Poole, who was already in prison for other crimes. When Jennifer learned the truth, she was devastated. She and Cotton eventually met. They forgave each other. They co-authored a book, Picking Cotton, and have since traveled the country together advocating for eyewitness identification reform.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "cotton_factors",
+    "heading": "Why Was She Wrong?",
+    "text": "Why was the ideal witness wrong? Several factors converged. The assault was traumatic and happened at night. Cross-race identification played a role — Jennifer is white, Cotton is Black. Lineups were suggestive. And each time Jennifer was asked to identify her attacker, she wasn't retrieving a memory — she was reinforcing a reconstruction. By the time of the trial, she had identified Cotton so many times that her certainty felt unshakeable. The memory had become the truth.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "lineups_failure",
+    "heading": "Why Lineups Fail",
+    "text": "Even if memory were perfectly reliable, the way we conduct lineups would still introduce errors. First is the relative judgment problem: witnesses don't ask \"is the perpetrator here?\" they ask \"who looks most like what I remember?\" Second is administrator influence: if the detective knows who the suspect is, subtle cues leak through. This is why researchers advocate for double-blind lineups.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "lineups_confidence",
+    "heading": "Confidence Is Not Correct",
+    "text": "Finally, there is confidence inflation. At the moment of identification, witnesses are often uncertain. But by the time they testify in court, their confidence has grown dramatically. Research consistently shows there is almost no relationship between how confident a witness is at trial and how accurate their identification is. Juries see certainty, but that original doubt is invisible.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "nuance_reforms",
+    "heading": "Is Testimony Useless?",
+    "text": "Eyewitness testimony is not worthless. It's unreliable when treated as certain. Practical reforms like sequential presentation of photos and confidence statements collected immediately can significantly reduce false identifications without reducing accurate ones. Some states have adopted these. Many haven't. The gap between science and the courtroom is still enormous.",
+    "mode": "light",
+    "font": "serif"
+  },
+  {
+    "id": "outro_fragile",
+    "heading": "A Fragile Thing",
+    "text": "The eyewitness testimony problem is a problem with how we understand our own minds. We feel like we're reliable narrators of our own experience. But certainty is decoupled from accuracy. Elizabeth Loftus once said: \"Memory, like liberty, is a fragile thing.\" Jennifer Thompson did everything right and destroyed an innocent man's life. This isn't a story about bad people — it's about the gap between how we think our minds work, and how they actually work.",
+    "mode": "light",
+    "font": "serif"
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "hook",
+    "heading": "Black Monday 1987",
+    "subheading": "The Anatomy of a Crash",
+    "info": "A 22.6% drop in a single trading session.",
+    "text": "Weeks before Black Monday in 1987, the market's internal mathematics changed. It began to 'remember' its recent state more than usual.",
+    "audio_path": "videos/collapse-finance/audio/hook.mp3",
+    "duration": 9.816,
+    "frames": 295,
+    "start_frame": 0,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "discovery",
+    "heading": "Statistical Flickers",
+    "subheading": "Pre-Crash Indicators",
+    "info": "Rising skewness detected in 2000 and 2008 crises.",
+    "text": "Using cumulative returns, researchers found rising variance and skewness preceded both the 2000 Dot-com crash and the 2008 Lehman Brothers bankruptcy.",
+    "audio_path": "videos/collapse-finance/audio/discovery.mp3",
+    "duration": 9.96,
+    "frames": 299,
+    "start_frame": 295,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "mechanism",
+    "heading": "CSD in Markets",
+    "subheading": "Loss of Resilience",
+    "info": "Market fluctuations grow larger near bifurcation points.",
+    "text": "Critical Slowing Down in markets is a loss of resilience. The market's fluctuations grow larger as it approaches a bifurcation point.",
+    "audio_path": "videos/collapse-finance/audio/mechanism.mp3",
+    "duration": 9.144,
+    "frames": 275,
+    "start_frame": 594,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "sowhat",
+    "heading": "The Feedback Paradox",
+    "subheading": "Social Complexity",
+    "info": "Detection can trigger the very event it warns of.",
+    "text": "But social systems are harder than nature: if everyone sees the warning signal, their fear may trigger the very crash they were trying to avoid.",
+    "audio_path": "videos/collapse-finance/audio/sowhat.mp3",
+    "duration": 8.256,
+    "frames": 248,
+    "start_frame": 869,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "audio_path": "videos/collapse-finance/audio/outro.mp3",
+    "duration": 1.044898,
+    "frames": 92,
+    "start_frame": 1117,
+    "mode": "dark",
+    "font": "sans-serif"
+  }
+]

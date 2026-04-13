@@ -1,0 +1,67 @@
+[
+  {
+    "id": "hook",
+    "heading": "Inside You",
+    "subheading": "Biological Tipping Points",
+    "info": "The brain and heart obey the same laws as lakes.",
+    "text": "The same equation that describes a dying lake also describes whether a human brain is about to experience a seizure or a heart attack.",
+    "audio_path": "videos/collapse-body/audio/hook.mp3",
+    "duration": 7.728,
+    "frames": 232,
+    "start_frame": 0,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "discovery",
+    "heading": "Internal Flickers",
+    "subheading": "Epileptic Pre-Signals",
+    "info": "Rising EEG variance detected hours before seizures.",
+    "text": "EEG signals show rising variance and slowing autocorrelation in the minutes and hours before a major epileptic episode.",
+    "audio_path": "videos/collapse-body/audio/discovery.mp3",
+    "duration": 7.512,
+    "frames": 226,
+    "start_frame": 232,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "mechanism",
+    "heading": "CSD in Mood",
+    "subheading": "Depression Dynamics",
+    "info": "Mood fluctuations increase before a systemic shift.",
+    "text": "Research shows that mood variance increases before deep depressive episodes. The psychological system 'flickers' between states before tipping.",
+    "audio_path": "videos/collapse-body/audio/mechanism.mp3",
+    "duration": 9.504,
+    "frames": 286,
+    "start_frame": 458,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "sowhat",
+    "heading": "Personal Resilience",
+    "subheading": "The Heart's Whisper",
+    "info": "Using math to listen to internal warning signs.",
+    "text": "Your biology is generous enough to warn you. We are building the tools to listen to these internal flickers before they become a collapse.",
+    "audio_path": "videos/collapse-body/audio/sowhat.mp3",
+    "duration": 8.616,
+    "frames": 259,
+    "start_frame": 744,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "audio_path": "videos/collapse-body/audio/outro.mp3",
+    "duration": 1.044898,
+    "frames": 92,
+    "start_frame": 1003,
+    "mode": "dark",
+    "font": "sans-serif"
+  }
+]

@@ -58,12 +58,24 @@ export const SketchGraph: React.FC<SketchGraphProps> = ({
     const allPoints = (equations || []).map(eq => {
         const points: [number, number][] = [];
         const resolution = 4;
+        
+        // Create a function from the string to avoid buggy string replacement
+        let fn: (x: number) => number;
+        try {
+          // Replace standalone 'x' with a variable, but safer to use a function
+          // We assume the user provides a valid JS expression using 'x'
+          fn = new Function('x', `with(Math) { return ${eq.fn}; }`) as (x: number) => number;
+        } catch (e) {
+          console.error("Failed to parse equation:", eq.fn, e);
+          return [];
+        }
+
         // Start from x=0 at the left axis (50px offset)
         for (let px = 50; px <= width - 20; px += resolution) {
             const x = (px - 50) / scale;
             let y;
             try {
-                y = eval(eq.fn.replace(/x/g, `(${x})`));
+                y = fn(x);
             } catch { continue; }
             
             const py = (height - 50) - y * scale;

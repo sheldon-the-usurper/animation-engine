@@ -11,7 +11,8 @@ const { fontFamily } = loadFont('normal', {
 });
 
 // Calculate total frames from timing data - purely based on sequential audio lengths
-const totalFrames = timingData.reduce((acc: number, segment: any) => acc + segment.frames, 0);
+// Add 60 frames for the visual-only outro buffer
+const totalFrames = timingData.reduce((acc: number, segment: any) => acc + (segment.frames || 0), 0) + 60;
 
 registerRoot(() => {
   return (
@@ -20,8 +21,8 @@ registerRoot(() => {
       component={Main}
       durationInFrames={totalFrames}
       fps={30}
-      width={1080}
-      height={1920}
+      width={1920}
+      height={1080}
       defaultProps={{
         fontFamily,
       }}

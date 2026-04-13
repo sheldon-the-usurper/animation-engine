@@ -1,0 +1,67 @@
+[
+  {
+    "id": "hook",
+    "heading": "The Warning Signal",
+    "subheading": "Critical Slowing Down (CSD)",
+    "info": "A universal mathematical law of failure.",
+    "text": "In 2021, researchers found exactly one universal warning signal that appears before every community collapse. It's called Critical Slowing Down.",
+    "audio_path": "videos/collapse-ecosystems/audio/hook.mp3",
+    "duration": 10.392,
+    "frames": 312,
+    "start_frame": 0,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "discovery",
+    "heading": "79 Communities",
+    "subheading": "Broad Empirical Proof",
+    "info": "Signal present in 100% of collapsed systems studied.",
+    "text": "By analyzing 79 different ecosystems, from shallow lakes to complex forests, a measurable mathematical flicker appeared every single time.",
+    "audio_path": "videos/collapse-ecosystems/audio/discovery.mp3",
+    "duration": 9.288,
+    "frames": 279,
+    "start_frame": 312,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Variance Spike",
+    "subheading": "The Physics of Fragility",
+    "info": "Recovery time increases as the tipping point nears.",
+    "text": "As the basin of attraction shallows, variance and autocorrelation rise. The system starts taking longer to bounce back from small disturbances.",
+    "audio_path": "videos/collapse-ecosystems/audio/mechanism.mp3",
+    "duration": 9.816,
+    "frames": 295,
+    "start_frame": 591,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "sowhat",
+    "heading": "Amazon Tipping Point",
+    "subheading": "The 25% Threshold",
+    "info": "Permanent flip from rainforest to savanna.",
+    "text": "With the Amazon forest nearing a 25% deforestation threshold, this signal is already visible. If we cross it, the rainforest flips permanently into savanna.",
+    "audio_path": "videos/collapse-ecosystems/audio/sowhat.mp3",
+    "duration": 11.064,
+    "frames": 332,
+    "start_frame": 886,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "audio_path": "videos/collapse-ecosystems/audio/outro.mp3",
+    "duration": 1.044898,
+    "frames": 92,
+    "start_frame": 1218,
+    "mode": "dark",
+    "font": "sans-serif"
+  }
+]

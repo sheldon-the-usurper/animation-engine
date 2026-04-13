@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hook",
+    "heading": "Planetary Tripwires",
+    "subheading": "The Younger Dryas",
+    "info": "Historical ice cores hold the math of the future.",
+    "text": "The Earth has tripwires. 12,000 years ago, the planet's climate flipped in a matter of decades—an event called the Younger Dryas. By analyzing ancient ice cores, we've found that the Earth's climate basin of attraction was shallowing for centuries before the final snap.",
+    "mode": "dark"
+  },
+  {
+    "id": "discovery",
+    "heading": "Tipping Cascades",
+    "subheading": "The Domino Effect",
+    "info": "One threshold cross triggers a global chain reaction.",
+    "text": "Crossing one threshold, like the Greenland Ice Sheet at 1.5 degrees, doesn't happen in isolation. It triggers a cascade. The melting ice disrupts the Atlantic Circulation, which in turn triggers the dieback of the Amazon. It is a global domino effect governed by the math of interconnected tipping points.",
+    "mode": "dark"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Shallowing Basins",
+    "subheading": "The Global Flicker",
+    "info": "Satellite data confirms a loss of planetary grip.",
+    "text": "As the planet warms, its 'basin of stability' is shallowing. Satellite data already shows a loss of resilience in vegetation and ocean currents. This is the global version of Critical Slowing Down—the Earth is taking longer to recover from seasonal shifts and extreme events, flickering toward a new state.",
+    "mode": "dark"
+  },
+  {
+    "id": "sowhat",
+    "heading": "The Warning Clock",
+    "subheading": "The Choice to Act",
+    "info": "The math is clear; the only variable is us.",
+    "text": "The planet is telling us exactly how much grip it has left. Unlike an ecosystem or a market, we have the unique ability to see the math of our own destruction. The signal is in the data. The question is whether we will use this early warning to change our trajectory before the basin disappears.",
+    "mode": "dark"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "mode": "dark"
+  }
+]

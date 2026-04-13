@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hook",
+    "heading": "The Warning Signal",
+    "subheading": "Dynamical Systems Theory",
+    "info": "Collapse is rarely a sudden break; it's a loss of force.",
+    "text": "Most people think collapse is a sudden, unpredictable break. But in dynamical systems theory, failure is often a slow, measurable loss of restorative force. Complex systems, from forests to financial markets, don't just stop working—they lose their ability to bounce back.",
+    "mode": "dark"
+  },
+  {
+    "id": "discovery",
+    "heading": "79 Communities",
+    "subheading": "The TU Munich Discovery",
+    "info": "Universal mathematical structure found at tipping points.",
+    "text": "Researchers at the Technical University of Munich discovered a universal mathematical structure at so-called tipping points. By analyzing 79 different ecological communities, they found that every single one sent a measurable signal before collapse. This signal doesn't just warn of danger—it can even rank which species will go extinct first.",
+    "mode": "dark"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Critical Slowing Down",
+    "subheading": "The Shallowing Basin",
+    "info": "As stability fades, the system 'remembers' its errors.",
+    "text": "Think of a system as a ball in a valley—its basin of attraction. In a healthy state, the valley is deep, and the ball returns to center quickly. But as a tipping point nears, the valley becomes shallow. Recovery takes longer. This is Critical Slowing Down. The system loses its 'memory' of stability and starts to flicker between states.",
+    "mode": "dark"
+  },
+  {
+    "id": "sowhat",
+    "heading": "Amazon Tipping Point",
+    "subheading": "The 25% Dieback Rule",
+    "info": "Hysteresis makes these transitions irreversible.",
+    "text": "In the Amazon, this math is becoming a reality. We are approaching a 25% deforestation threshold. Crossing it doesn't just mean fewer trees—it means the basin of attraction for the entire rainforest disappears. Because of hysteresis, once the forest flips into a savanna, simply replanting trees won't be enough to bring it back.",
+    "mode": "dark"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "mode": "dark"
+  }
+]

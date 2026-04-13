@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hook",
+    "heading": "The Tainter Curve",
+    "subheading": "Thermodynamics of Power",
+    "info": "Complexity is not free; it's a biological debt.",
+    "text": "Civilizations don't fail because of 'bad luck.' They fail because they reach a mathematical limit. Anthropologist Joseph Tainter discovered that societies solve problems by adding complexity—but complexity has a metabolic cost that eventually exceeds its benefits.",
+    "mode": "dark"
+  },
+  {
+    "id": "discovery",
+    "heading": "Roman Cashflow",
+    "subheading": "The Cost of Maintenance",
+    "info": "The Empire's army size grew as its ROI plummeted.",
+    "text": "Roman historical data reveals Tainter's law in action. Early expansion brought high returns—slaves, silver, and land. But as the Empire grew, the cost of the army and the bureaucracy began to outpace the returns of conquest. The system was spending 100% of its resources just to exist.",
+    "mode": "dark"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Diminishing Returns",
+    "subheading": "The Administrative Ratchet",
+    "info": "Every new layer of governance yields smaller gains.",
+    "text": "This is the 'Administrative Ratchet.' To solve the next crisis, you add a specialist, a regulator, or a manager. Each layer initially helps, but cumulatively, they exhibit diminishing returns. Eventually, the marginal benefit of one more layer of complexity becomes negative, and the system becomes thermodynamically unstable.",
+    "mode": "dark"
+  },
+  {
+    "id": "sowhat",
+    "heading": "The Long Descent",
+    "subheading": "Modern Bureaucracy",
+    "info": "Collapse is a simplification of an overextended system.",
+    "text": "Today, we see the same pattern. The share of managers in the US workforce has grown from 10% to 35% in a century. We are spending more to achieve stagnating outcomes. Collapse isn't a catastrophe—it is the system shedding weight it can no longer afford to carry. It is a thermodynamic inevitability.",
+    "mode": "dark"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "mode": "dark"
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "hook",
+    "heading": "Planetary Tripwires",
+    "subheading": "The Younger Dryas",
+    "info": "Abrupt shifts are hidden in historical ice cores.",
+    "text": "Robust indicators of critical slowing down were found in ice cores before the Younger Dryas\u2014the most dramatic climate shift in Earth's history.",
+    "audio_path": "videos/collapse-climate/audio/hook.mp3",
+    "duration": 8.448,
+    "frames": 254,
+    "start_frame": 0,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "discovery",
+    "heading": "Tipping Cascades",
+    "subheading": "Interconnected Failure",
+    "info": "Greenland ice loss triggers a global domino effect.",
+    "text": "Crossing one threshold, like the Greenland Ice Sheet at 1.5 degrees, can trigger a cascade of tipping points across the entire planet.",
+    "audio_path": "videos/collapse-climate/audio/discovery.mp3",
+    "duration": 8.784,
+    "frames": 264,
+    "start_frame": 254,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "mechanism",
+    "heading": "Shallowing Basins",
+    "subheading": "Loss of Stability",
+    "info": "Earth's climate is losing its ability to recover.",
+    "text": "As the Earth's climate basin of attraction shallows, recovery from small perturbations slows down. This signal is already in the satellite data.",
+    "audio_path": "videos/collapse-climate/audio/mechanism.mp3",
+    "duration": 9.528,
+    "frames": 286,
+    "start_frame": 518,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "sowhat",
+    "heading": "The Warning Clock",
+    "subheading": "Listen to the Planet",
+    "info": "Satellite data shows a complex system losing its grip.",
+    "text": "The planet is telling us exactly how much grip it has left. The question is whether we've built the tools to listen.",
+    "audio_path": "videos/collapse-climate/audio/sowhat.mp3",
+    "duration": 7.32,
+    "frames": 220,
+    "start_frame": 804,
+    "mode": "dark",
+    "font": "sans-serif"
+  },
+  {
+    "id": "outro",
+    "heading": "EulerFold",
+    "subheading": "",
+    "info": "",
+    "text": "",
+    "audio_path": "videos/collapse-climate/audio/outro.mp3",
+    "duration": 1.044898,
+    "frames": 92,
+    "start_frame": 1024,
+    "mode": "dark",
+    "font": "sans-serif"
+  }
+]

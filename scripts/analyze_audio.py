@@ -61,13 +61,15 @@ def main():
         timing_data.append({
             "id": segment['id'],
             "heading": segment.get('heading', ''),
+            "subheading": segment.get('subheading', ''),
+            "info": segment.get('info', ''),
             "text": segment['text'],
             "audio_path": f"videos/{os.path.basename(video_dir)}/audio/{segment['id']}.mp3",
             "duration": duration,
             "frames": frames,
             "start_frame": current_offset,
-            "mode": segment['mode'],
-            "font": segment['font']
+            "mode": segment.get('mode', 'light'),
+            "font": segment.get('font', 'sans-serif')
         })
         current_offset += frames
 

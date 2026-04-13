@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eyewitness Testimony Script</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #18161a;
+    --ink-soft: #45424a;
+    --ink-muted: #8a8791;
+    --paper: #f7f4f0;
+    --paper-warm: #ede9e2;
+    --red: #b52a2a;
+    --red-light: #faeaea;
+    --purple: #4a3fa0;
+    --purple-light: #eeedfe;
+    --teal: #0d6b56;
+    --teal-light: #e0f4ee;
+    --amber: #8a5c0a;
+    --amber-light: #faeeda;
+    --border: rgba(24,22,26,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; }
+
+  .header {
+    background: #18161a;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-grid {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: end;
+  }
+  .header-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(247,244,240,0.4);
+    margin-bottom: 0.75rem;
+  }
+  .header-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.9rem, 4.5vw, 3rem);
+    line-height: 1.12;
+    color: #f7f4f0;
+    font-weight: 300;
+    max-width: 580px;
+  }
+  .header-title em { font-style: italic; color: rgba(247,244,240,0.65); }
+  .header-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: right;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #c85a5a;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(247,244,240,0.35);
+  }
+  .header-meta {
+    max-width: 860px;
+    margin: 1.5rem auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(247,244,240,0.08);
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(247,244,240,0.3); font-family: 'DM Mono', monospace; }
+  .meta-val { font-size: 13px; color: rgba(247,244,240,0.7); font-weight: 300; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+
+  .segment { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .segment:last-child { border-bottom: none; }
+
+  .seg-header { display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 1.5rem; }
+  .seg-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-muted); min-width: 28px; padding-top: 5px; letter-spacing: 0.04em; }
+  .seg-title-wrap { flex: 1; }
+  .seg-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 3px; margin-bottom: 6px;
+  }
+  .tag-hook    { background: var(--red-light);    color: var(--red); }
+  .tag-science { background: var(--purple-light);  color: var(--purple); }
+  .tag-case    { background: #1a1618; color: rgba(247,244,240,0.8); }
+  .tag-deep    { background: var(--teal-light);   color: var(--teal); }
+  .tag-nuance  { background: var(--amber-light);  color: var(--amber); }
+  .tag-outro   { background: var(--paper-warm);   color: var(--ink-muted); border: 1px solid var(--border); }
+
+  .seg-title { font-family: 'Fraunces', serif; font-size: 1.4rem; line-height: 1.2; font-weight: 300; }
+  .seg-time  { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--ink-muted); margin-top: 3px; }
+
+  .body { margin-left: 3rem; }
+
+  .spoken {
+    font-family: 'Fraunces', serif;
+    font-size: 1.08rem;
+    line-height: 1.78;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+  }
+  .spoken strong { font-weight: 500; font-style: normal; border-bottom: 1.5px solid var(--red); padding-bottom: 1px; }
+  .spoken em { font-style: italic; color: var(--ink-soft); }
+
+  .director {
+    display: flex; gap: 10px;
+    background: var(--paper-warm);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .director-icon { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--amber); min-width: 20px; padding-top: 2px; }
+  .director-text { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+  .director-text strong { color: var(--amber); font-weight: 500; }
+
+  .analogy {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    padding: 1.1rem 1.4rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  .analogy::before {
+    content: 'analogy';
+    position: absolute; top: -9px; left: 14px;
+    background: white; padding: 0 6px;
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted);
+  }
+  .analogy p { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+  .analogy p strong { color: var(--ink); font-weight: 500; }
+
+  .callout {
+    border-left: 3px solid var(--red);
+    border-radius: 0 8px 8px 0;
+    background: var(--red-light);
+    padding: 0.7rem 1.2rem;
+    margin: 0.8rem 0 1.2rem;
+  }
+  .callout p { font-size: 14px; color: var(--red); line-height: 1.55; }
+  .callout p strong { font-weight: 600; }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.2rem;
+  }
+  .stat-card {
+    background: var(--paper-warm);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+  }
+  .stat-card-num { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 300; color: var(--red); line-height: 1; margin-bottom: 4px; }
+  .stat-card-label { font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+  .stat-card-label strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 1px; font-size: 12px; }
+
+  .case-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+  }
+  .case-header {
+    background: #18161a;
+    padding: 0.65rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .case-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(247,244,240,0.45);
+  }
+  .case-name { font-size: 13px; font-weight: 500; color: rgba(247,244,240,0.9); }
+  .case-body { padding: 1rem 1.2rem; background: white; }
+  .case-body p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+  .case-body p + p { margin-top: 0.6rem; }
+  .case-body strong { color: var(--ink); font-weight: 500; }
+
+  .science-box {
+    border-left: 3px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    background: var(--purple-light);
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+  .science-box p { font-size: 13.5px; color: var(--purple); line-height: 1.6; }
+  .science-box p strong { font-weight: 600; }
+
+
+  /* ── NEW: slide counter tag ── */
+  .slide-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #18161a; color: rgba(247,244,240,0.75);
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 9px 3px 7px; border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .slide-tag::before {
+    content: '';
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: #c85a5a;
+  }
+
+  /* ── NEW: diagram / chart wrapper ── */
+  .diagram-wrap {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .diagram-title {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 12px;
+  }
+
+  /* ── NEW: horizontal bar comparison ── */
+  .bar-row { display: flex; flex-direction: column; gap: 10px; }
+  .bar-item { }
+  .bar-label { font-size: 12px; color: var(--ink-soft); margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .bar-label span { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-muted); }
+  .bar-track { height: 10px; background: var(--paper-warm); border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; }
+  .bar-red  { background: #b52a2a; }
+  .bar-soft { background: #d4a0a0; }
+  .bar-teal { background: #0d6b56; }
+  .bar-gray { background: #8a8791; }
+
+  /* ── NEW: memory stage flow ── */
+  .stage-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 0; margin-bottom: 1.2rem; }
+  .stage-box { background: var(--paper-warm); border-radius: 8px; padding: 0.9rem 1rem; text-align: center; }
+  .stage-box.danger { background: var(--red-light); }
+  .stage-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-muted); margin-bottom: 4px; }
+  .stage-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+  .stage-risks { font-size: 11px; color: var(--ink-soft); line-height: 1.5; text-align: left; }
+  .stage-risks li { list-style: none; padding-left: 10px; position: relative; }
+  .stage-risks li::before { content: '·'; position: absolute; left: 0; color: var(--red); }
+  .stage-arrow { font-size: 18px; color: var(--ink-muted); text-align: center; padding: 0 4px; }
+
+  /* ── NEW: timeline ── */
+  .timeline { position: relative; padding-left: 28px; margin-bottom: 1.2rem; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot { position: absolute; left: -24px; top: 4px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid white; }
+  .tl-dot.bad  { background: var(--red); }
+  .tl-dot.ok   { background: var(--teal); }
+  .tl-dot.warn { background: var(--amber); }
+  .tl-year { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-muted); letter-spacing: 0.05em; }
+  .tl-event { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin-top: 1px; }
+  .tl-event strong { color: var(--ink); font-weight: 500; }
+
+  /* ── NEW: factor cards grid ── */
+  .factor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem; }
+  .factor-card { background: var(--paper-warm); border-radius: 8px; padding: 0.85rem 1rem; }
+  .factor-card-head { font-size: 12px; font-weight: 500; color: var(--red); margin-bottom: 4px; }
+  .factor-card-body { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+
+  /* ── NEW: loftus experiment visual ── */
+  .verb-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.2rem; }
+  .verb-card { border-radius: 8px; padding: 1rem 1.2rem; text-align: center; }
+  .verb-card.v-hit    { background: var(--teal-light); border: 1px solid #9FE1CB; }
+  .verb-card.v-smash  { background: var(--red-light);  border: 1px solid #f0b0b0; }
+  .verb-word { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 300; margin-bottom: 8px; }
+  .verb-card.v-hit .verb-word  { color: var(--teal); }
+  .verb-card.v-smash .verb-word { color: var(--red); }
+  .verb-speed { font-size: 11px; color: var(--ink-soft); }
+  .verb-speed strong { display: block; font-family: 'DM Mono', monospace; font-size: 1.1rem; color: var(--ink); }
+
+  /* ── NEW: scatter mock ── */
+  .scatter-wrap { position: relative; height: 180px; }
+  .scatter-axis-y { position: absolute; left: 0; top: 0; bottom: 24px; width: 30px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; padding-right: 6px; }
+  .scatter-axis-x { position: absolute; bottom: 0; left: 30px; right: 0; display: flex; justify-content: space-between; padding-top: 4px; }
+  .axis-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--ink-muted); }
+  .scatter-plot { position: absolute; left: 30px; right: 0; top: 0; bottom: 24px; border-left: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .scatter-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%, 50%); }
+  .scatter-dot.wrong { background: rgba(181,42,42,0.55); }
+  .scatter-dot.right { background: rgba(13,107,86,0.55); }
+  .scatter-trend { position: absolute; width: 100%; height: 100%; }
+
+  /* ── NEW: lineup failure cards ── */
+  .failure-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.2rem; }
+  .failure-item { display: flex; gap: 12px; align-items: flex-start; padding: 0.85rem 1rem; background: white; border: 1px solid var(--border); border-radius: 8px; }
+  .failure-num { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--red); min-width: 28px; line-height: 1; padding-top: 2px; opacity: 0.4; }
+  .failure-text { }
+  .failure-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+  .failure-desc { font-size: 12.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  /* ── NEW: reform comparison table ── */
+  .reform-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 1.2rem; }
+  .reform-table th { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .reform-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--ink-soft); line-height: 1.45; vertical-align: top; }
+  .reform-table tr:last-child td { border-bottom: none; }
+  .reform-table td:first-child { font-weight: 500; color: var(--ink); width: 38%; }
+  .badge-old { display: inline-block; background: var(--red-light); color: var(--red); font-family: 'DM Mono', monospace; font-size: 9px; padding: 1px 6px; border-radius: 3px; }
+  .badge-new { display: inline-block; background: var(--teal-light); color: var(--teal); font-family: 'DM Mono', monospace; font-size: 9px; padding: 1px 6px; border-radius: 3px; }
+
+  .links-section {
+    background: #18161a;
+    padding: 2.5rem;
+    margin-top: 3rem;
+  }
+  .links-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .links-col-label {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(247,244,240,0.3); margin-bottom: 12px;
+  }
+  .link-item { margin-bottom: 8px; }
+  .link-item a { color: rgba(247,244,240,0.65); font-size: 12.5px; text-decoration: none; font-family: 'DM Mono', monospace; }
+  .link-item a:hover { color: rgba(247,244,240,0.9); }
+  .link-desc { font-size: 11px; color: rgba(247,244,240,0.3); margin-top: 1px; }
+
+  @media (max-width: 600px) {
+    .header-grid { grid-template-columns: 1fr; }
+    .header-stats { text-align: left; flex-direction: row; flex-wrap: wrap; gap: 20px; }
+    .body { margin-left: 0; }
+    .links-inner { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-grid">
+    <div>
+      <div class="header-eyebrow">Paper of the Week · Script</div>
+      <h1 class="header-title">You saw it with your own eyes.<br><em>That doesn't mean it happened.</em></h1>
+    </div>
+    <div class="header-stats">
+      <div class="stat-item">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">of DNA exonerations<br>involved eyewitness ID</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1 in 3</div>
+        <div class="stat-label">eyewitnesses pick<br>the wrong person</div>
+      </div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">Topic</span><span class="meta-val">Eyewitness testimony & false memory</span></div>
+    <div class="meta-item"><span class="meta-label">Runtime</span><span class="meta-val">~18–22 minutes</span></div>
+    <div class="meta-item"><span class="meta-label">Level</span><span class="meta-val">Beginner-friendly deep dive</span></div>
+    <div class="meta-item"><span class="meta-label">Key researcher</span><span class="meta-val">Elizabeth Loftus, UC Irvine</span></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 HOOK -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">01</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-hook">Hook</span>
+        <div class="seg-title">The most convincing thing in a courtroom</div>
+        <div class="seg-time">0:00 – 1:30</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="director"><div class="director-icon">▶</div><div class="director-text"><strong>Visual:</strong> Open on a courtroom. A witness on the stand. Slow zoom. Silence. Then cut to your face.</div></div>
+      <p class="spoken">
+        Imagine you're on a jury. The victim walks to the stand, looks the defendant in the eye, and says — clearly, calmly, with complete certainty — <em>"That's him. I will never forget that face."</em>
+      </p>
+      <p class="spoken">
+        Late US Supreme Court Justice William Brennan once wrote: <em>"There is almost nothing more convincing than a live human being who takes the stand, points a finger at the defendant, and says, 'That's the one.'"</em>
+      </p>
+      <p class="spoken">
+        And he was right. Jurors believe eyewitnesses. Judges believe eyewitnesses. Prosecutors build entire cases around them.
+      </p>
+      <p class="spoken">
+        There's just one problem: <strong>eyewitness testimony is, statistically, one of the least reliable forms of evidence we have.</strong> And decades of psychology research have proven it — but the courtroom hasn't caught up.
+      </p>
+      <p class="spoken">
+        Today we're going to go deep on why your memory of what you saw is not a recording. It's a reconstruction. And that reconstruction can be wrong — even when you're absolutely certain it's right.
+      </p>
+    </div>
+  </div>
+
+  <!-- 02 THE NUMBERS -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">02</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-hook">The Numbers</span>
+        <div class="seg-title">How bad is the problem, really?</div>
+        <div class="seg-time">1:30 – 4:00</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="director"><div class="director-icon">▶</div><div class="director-text"><strong>Visual:</strong> Show these stat cards on screen one by one as you read them.</div></div>
+      <p class="spoken">Let's start with the scale of this. These numbers come from the Innocence Project — a nonprofit that uses DNA evidence to overturn wrongful convictions.</p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-card-num">~70%</div>
+          <div class="stat-card-label"><strong>DNA exonerations</strong>involved eyewitness misidentification as a contributing factor</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">375+</div>
+          <div class="stat-card-label"><strong>people exonerated</strong>by DNA evidence in the US alone since 1989</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">~14 yrs</div>
+          <div class="stat-card-label"><strong>average time</strong>wrongfully imprisoned before exoneration</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-num">1 in 3</div>
+          <div class="stat-card-label"><strong>eyewitnesses</strong>who pick someone from a real lineup pick the wrong person</div>
+        </div>
+      </div>
+
+      <div class="slide-tag">Slide — evidence reliability comparison</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">How reliable is each type of evidence? (false positive rate)</div>
+        <div class="bar-row">
+          <div class="bar-item">
+            <div class="bar-label">DNA evidence <span>~0.1%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-teal" style="width:1%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Fingerprint analysis <span>~1%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-teal" style="width:4%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Surveillance footage <span>~5–10%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-gray" style="width:18%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Eyewitness lineup ID (real cases) <span>~33%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-red" style="width:66%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-label">Eyewitness ID under stress / cross-race <span>&gt;40%</span></div>
+            <div class="bar-track"><div class="bar-fill bar-red" style="width:82%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="spoken">
+        Let that last one sink in. In real police lineups — not lab experiments — <strong>one in three eyewitnesses who make an identification get it wrong.</strong> That's not a rare error. That's a coin flip with an extra chance of failure.
+      </p>
+      <p class="spoken">
+        And here's what makes this especially troubling: those wrong identifications are often delivered with <em>complete confidence</em>. The witness isn't guessing. They're certain. And that certainty is exactly what convinces a jury.
+      </p>
+      <div class="callout"><p>The Innocence Project calls eyewitness misidentification <strong>"the single greatest cause of wrongful convictions nationwide."</strong></p></div>
+      <p class="spoken">
+        So how does this happen? Why is memory so much less reliable than we think? To understand that, we need to understand how memory actually works — because it's almost nothing like what most people assume.
+      </p>
+    </div>
+  </div>
+
+  <!-- 03 HOW MEMORY WORKS -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">03</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-science">The Science</span>
+        <div class="seg-title">Memory is not a camera</div>
+        <div class="seg-time">4:00 – 8:00</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="director"><div class="director-icon">▶</div><div class="director-text"><strong>Visual:</strong> Show a camera shutter, then cross it out. Replace it with someone actively assembling puzzle pieces.</div></div>
+      <p class="spoken">
+        Most people intuitively think of memory as a recording. Something happens, it gets stored, and when you remember it, you play it back. Like a video file.
+      </p>
+      <p class="spoken">
+        This is completely wrong.
+      </p>
+      <p class="spoken">
+        Memory is <strong>reconstructive</strong>. Every time you remember something, you're not retrieving a stored file — you're <em>rebuilding</em> the memory from fragments, filling in gaps with logic, expectation, and information you've picked up since the event. And each time you rebuild it, you can inadvertently change it.
+      </p>
+      <div class="analogy">
+        <p>Think of a memory like a Wikipedia article. The original event is written once. But every time you access it, other people — other memories, experiences, things you've been told — can edit it. And crucially, <strong>the edits don't look like edits.</strong> The updated version just feels like the truth.</p>
+      </div>
+      <p class="spoken">
+        There are three stages where memory can go wrong, and they map almost perfectly onto the stages of a criminal investigation.
+      </p>
+
+      <div class="slide-tag">Slide — 3-stage memory failure model</div>
+      <div class="stage-flow">
+        <div class="stage-box danger">
+          <div class="stage-num">Stage 1</div>
+          <div class="stage-name">Acquisition</div>
+          <ul class="stage-risks">
+            <li>Stress narrows attention</li>
+            <li>Weapon focus effect</li>
+            <li>Poor lighting / distance</li>
+            <li>Short exposure time</li>
+          </ul>
+        </div>
+        <div class="stage-arrow">→</div>
+        <div class="stage-box danger">
+          <div class="stage-num">Stage 2</div>
+          <div class="stage-name">Storage</div>
+          <ul class="stage-risks">
+            <li>Memory fades over time</li>
+            <li>Talking to other witnesses</li>
+            <li>News coverage / photos</li>
+            <li>Leading questions plant details</li>
+          </ul>
+        </div>
+        <div class="stage-arrow">→</div>
+        <div class="stage-box danger">
+          <div class="stage-num">Stage 3</div>
+          <div class="stage-name">Retrieval</div>
+          <ul class="stage-risks">
+            <li>Lineup pressure</li>
+            <li>Leading question wording</li>
+            <li>Repeated recall changes memory</li>
+            <li>Confidence grows post-ID</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="spoken">
+        <strong>Acquisition:</strong> When you first witness something, your brain doesn't record everything. Stress narrows attention. Darkness reduces detail. Distance blurs faces. If there's a weapon involved — a gun, a knife — your eyes fixate on the weapon, not the person holding it. Researchers call this <em>weapon focus</em>. You saw the crime. You didn't necessarily see the criminal.
+      </p>
+
+      <div class="slide-tag">Slide — weapon focus illustration</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Weapon focus effect — where attention goes during a crime</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center">
+          <div>
+            <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+              <rect width="200" height="140" fill="#f7f4f0" rx="6"/>
+              <!-- person silhouette -->
+              <circle cx="100" cy="38" r="18" fill="#B4B2A9"/>
+              <rect x="80" y="56" width="40" height="52" rx="6" fill="#B4B2A9"/>
+              <rect x="64" y="60" width="18" height="36" rx="5" fill="#B4B2A9"/>
+              <rect x="118" y="60" width="18" height="36" rx="5" fill="#B4B2A9"/>
+              <rect x="80" y="106" width="16" height="28" rx="4" fill="#B4B2A9"/>
+              <rect x="104" y="106" width="16" height="28" rx="4" fill="#B4B2A9"/>
+              <!-- gun in hand (right) -->
+              <rect x="128" y="74" width="26" height="10" rx="3" fill="#45424a"/>
+              <rect x="136" y="68" width="8" height="8" rx="2" fill="#45424a"/>
+              <!-- eye gaze circles concentrating on gun -->
+              <circle cx="154" cy="79" r="20" fill="none" stroke="#b52a2a" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.7"/>
+              <circle cx="154" cy="79" r="13" fill="none" stroke="#b52a2a" stroke-width="1" opacity="0.5"/>
+              <text x="100" y="132" text-anchor="middle" font-family="DM Mono,monospace" font-size="9" fill="#8a8791">witness attention</text>
+            </svg>
+          </div>
+          <div>
+            <div style="font-size:12.5px;color:var(--ink-soft);line-height:1.65">
+              <div style="margin-bottom:8px"><span style="font-weight:500;color:var(--red)">What witness sees:</span> the weapon, in high detail</div>
+              <div style="margin-bottom:8px"><span style="font-weight:500;color:var(--ink)">What witness misses:</span> face, hair, clothing, height, distinguishing features</div>
+              <div style="font-size:11px;color:var(--ink-muted);border-top:1px solid var(--border);padding-top:8px">Studies show face recall accuracy drops by <strong style="color:var(--ink)">15–25%</strong> when a weapon is present vs. absent.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="spoken">
+        <strong>Storage:</strong> Over time, memories fade and blur. But more dangerously, they can be contaminated. Talking to other witnesses, reading news coverage, seeing a photo in a lineup — all of these can insert new details into your memory of the original event, and those new details can feel just as real as what you actually saw.
+      </p>
+      <p class="spoken">
+        <strong>Retrieval:</strong> The act of remembering is itself a process that can change the memory. How questions are asked, who is in the room, the pressure you feel to identify someone — all of it affects what you report.
+      </p>
+      <div class="science-box"><p><strong>Key insight:</strong> These aren't failures of memory. They are memory working exactly as designed — filling gaps, updating with new information, making coherent narratives. The problem is that our legal system treats it like a recording.</p></div>
+    </div>
+  </div>
+
+  <!-- 04 LOFTUS -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">04</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-science">The Researcher</span>
+        <div class="seg-title">Elizabeth Loftus and the car crash that changed everything</div>
+        <div class="seg-time">8:00 – 12:00</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="director"><div class="director-icon">▶</div><div class="director-text"><strong>Visual:</strong> Show a photo of Loftus. Then show two side-by-side words: "HIT" vs "SMASHED" — large text, simple graphic.</div></div>
+      <p class="spoken">
+        The researcher who almost single-handedly forced the legal system to take this seriously is a psychologist named <strong>Elizabeth Loftus</strong>. She's been ranked one of the 100 most influential psychologists of the 20th century, and she's spent fifty years proving that memory is shockingly easy to manipulate.
+      </p>
+      <p class="spoken">
+        Her most famous experiment, done in 1974 with colleague John Palmer, is almost embarrassingly simple. She showed participants a video of a car accident. Then she asked them one question — with one tiny variation.
+      </p>
+      <p class="spoken">
+        Half the participants were asked: <em>"How fast were the cars going when they <strong>hit</strong> each other?"</em>
+      </p>
+      <p class="spoken">
+        The other half: <em>"How fast were the cars going when they <strong>smashed</strong> into each other?"</em>
+      </p>
+
+      <div class="slide-tag">Slide — Loftus & Palmer 1974 results</div>
+      <div class="verb-compare">
+        <div class="verb-card v-hit">
+          <div class="verb-word">"hit"</div>
+          <div class="verb-speed">avg. speed estimate<strong>31.8 mph</strong></div>
+          <div style="margin-top:10px;font-size:11px;color:var(--teal)">Broken glass recalled: <strong>14%</strong></div>
+        </div>
+        <div class="verb-card v-smash">
+          <div class="verb-word">"smashed"</div>
+          <div class="verb-speed">avg. speed estimate<strong>40.8 mph</strong></div>
+          <div style="margin-top:10px;font-size:11px;color:var(--red)">Broken glass recalled: <strong>32%</strong></div>
+        </div>
+      </div>
+      <div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:1.2rem;padding:0.6rem 0.8rem;background:var(--paper-warm);border-radius:6px">
+        There was no broken glass in the video. One word doubled the rate of false memory.
+      </div>
+
+      <div class="callout"><p><strong>There was no broken glass in the video.</strong> The word "smashed" had planted a false detail into their memory of what they watched.</p></div>
+      <p class="spoken">
+        This is the <strong>misinformation effect</strong>: when information you receive after an event gets woven into your memory of the event itself. And you can't tell the difference between the original memory and the planted one. They feel identical.
+      </p>
+
+      <div class="slide-tag">Slide — Lost in the Mall study</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Can entirely false memories be implanted? — Loftus "Lost in the Mall" study</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div style="text-align:center;padding:0.8rem;background:var(--paper-warm);border-radius:8px">
+            <div style="font-family:'Fraunces',serif;font-size:1.6rem;font-weight:300;color:var(--ink);margin-bottom:4px">3</div>
+            <div style="font-size:11px;color:var(--ink-soft)">true childhood events given to participants</div>
+          </div>
+          <div style="text-align:center;padding:0.8rem;background:var(--paper-warm);border-radius:8px">
+            <div style="font-family:'Fraunces',serif;font-size:1.6rem;font-weight:300;color:var(--red);margin-bottom:4px">1</div>
+            <div style="font-size:11px;color:var(--ink-soft)">completely fabricated event added (getting lost in a mall)</div>
+          </div>
+          <div style="text-align:center;padding:0.8rem;background:var(--red-light);border-radius:8px">
+            <div style="font-family:'Fraunces',serif;font-size:1.6rem;font-weight:300;color:var(--red);margin-bottom:4px">25%</div>
+            <div style="font-size:11px;color:var(--red)">of participants not only believed it — they added new fabricated details to the false memory</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="spoken">
+        Loftus then went further. She ran a study called "Lost in the Mall." She had family members help researchers convince adult participants they had been lost in a shopping mall as a child — an event that had never happened. About <strong>25% of participants not only believed the false memory, but began elaborating on it</strong> — adding details, feelings, sensory experiences — for an event that never occurred.
+      </p>
+      <p class="spoken">
+        This wasn't people lying. They genuinely remembered something that didn't happen. Memory isn't just unreliable about details. Under the right conditions, it can construct entire events from nothing.
+      </p>
+    </div>
+  </div>
+
+  <!-- 05 COTTON CASE -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">05</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-case">Real Case</span>
+        <div class="seg-title">Ronald Cotton: 11 years for a crime he didn't commit</div>
+        <div class="seg-time">12:00 – 16:00</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="director"><div class="director-icon">▶</div><div class="director-text"><strong>Visual:</strong> Show a title card with just "North Carolina, 1984." Then let it breathe while you speak.</div></div>
+      <p class="spoken">
+        Now let's talk about a real case — because the statistics become much harder to look away from when you see them attached to actual people.
+      </p>
+      <div class="case-block">
+        <div class="case-header">
+          <span class="case-badge">Case study</span>
+          <span class="case-name">Ronald Cotton — North Carolina, 1984</span>
+        </div>
+        <div class="case-body">
+          <p>Jennifer Thompson was a college student when she was raped at knifepoint in her apartment. During the assault, she made a conscious, deliberate effort to memorize her attacker's face — she wanted to be able to identify him if she survived.</p>
+          <p>She was described as the <strong>ideal eyewitness</strong>. Motivated, attentive, determined. She studied every feature.</p>
+          <p>She identified Ronald Cotton from a photo lineup. Then from a physical lineup. She testified against him in court with complete certainty. He was convicted and sentenced to <strong>life in prison plus 54 years</strong>.</p>
+          <p>In 1995 — <strong>eleven years later</strong> — DNA testing proved Cotton was innocent. The actual perpetrator was a man named Bobby Poole, who had committed similar crimes in the area and was already in prison. His photo had never been in the lineup Jennifer was shown.</p>
+          <p>When Jennifer learned the truth, she was devastated. She and Cotton eventually met. They forgave each other. They co-authored a book, <em>Picking Cotton</em>, and have since traveled the country together advocating for eyewitness identification reform.</p>
+        </div>
+      </div>
+      <div class="slide-tag">Slide — Ronald Cotton case timeline</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Ronald Cotton — timeline of a wrongful conviction</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot bad"></div><div class="tl-year">Jul 1984</div><div class="tl-event">Jennifer Thompson is raped at knifepoint. <strong>During the attack, she deliberately tries to memorise her attacker's face.</strong></div></div>
+          <div class="tl-item"><div class="tl-dot bad"></div><div class="tl-year">Aug 1984</div><div class="tl-event">Jennifer identifies Ronald Cotton from a <strong>photo lineup</strong>. Then identifies him again from a <strong>physical lineup</strong>. Both times: absolute certainty.</div></div>
+          <div class="tl-item"><div class="tl-dot bad"></div><div class="tl-year">Jan 1985</div><div class="tl-event"><strong>Cotton convicted.</strong> Sentenced to life in prison + 54 years. No physical evidence links him to the crime.</div></div>
+          <div class="tl-item"><div class="tl-dot warn"></div><div class="tl-year">1987</div><div class="tl-event">New trial ordered. In prison, Cotton meets Bobby Poole — the actual perpetrator. Poole brags about the crime. <strong>Jennifer still identifies Cotton at the second trial.</strong> He is convicted again.</div></div>
+          <div class="tl-item"><div class="tl-dot ok"></div><div class="tl-year">1995</div><div class="tl-event"><strong>DNA testing exonerates Cotton.</strong> Same test identifies Bobby Poole. Cotton is released after 10.5 years. Governor issues a full pardon.</div></div>
+          <div class="tl-item"><div class="tl-dot ok"></div><div class="tl-year">2009</div><div class="tl-event">Thompson and Cotton co-author <em>Picking Cotton</em>. They travel together advocating for eyewitness identification reform.</div></div>
+        </div>
+      </div>
+
+      <p class="spoken">
+        This case is important not just because it's heartbreaking — it's important because Jennifer Thompson did <em>everything right</em>. She wasn't careless. She wasn't guessing. She paid more attention than almost any eyewitness does. And she was still wrong.
+      </p>
+
+      <div class="slide-tag">Slide — why the misidentification happened</div>
+      <div class="factor-grid">
+        <div class="factor-card">
+          <div class="factor-card-head">Cross-race identification</div>
+          <div class="factor-card-body">Jennifer is white, Cotton is Black. Research shows cross-race IDs are on average <strong>25–40% less accurate.</strong> Cross-race misidentification is a factor in 42% of all wrongful convictions from lineup errors.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card-head">Stress & trauma</div>
+          <div class="factor-card-body">The assault happened at night, under extreme stress. The weapon focus effect likely drew attention away from the perpetrator's face during the most critical moments.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card-head">Repeated identification</div>
+          <div class="factor-card-body">Jennifer identified Cotton from a photo, then a physical lineup, then in court. Each repetition <strong>reinforced the false memory</strong>, making it feel more real and certain each time.</div>
+        </div>
+        <div class="factor-card">
+          <div class="factor-card-head">Suggestive procedures</div>
+          <div class="factor-card-body">Bobby Poole's photo was never in the lineup. Jennifer could only pick "the person who looks most like the attacker." Relative judgment, not absolute match.</div>
+        </div>
+      </div>
+
+      <p class="spoken">
+        Why? Several factors converged. The assault was traumatic and happened at night. Cross-race identification plays a role — Jennifer is white, Cotton is Black, and research consistently shows people are less accurate identifying faces from other racial groups. The lineups were suggestive in subtle ways. And each time Jennifer was asked to identify her attacker — first photo, then in person, then at trial — she wasn't retrieving a memory. She was reinforcing a reconstruction. By trial, she had identified Cotton so many times that her certainty felt unshakeable.
+      </p>
+      <p class="spoken">
+        The memory had become the truth.
+      </p>
+    </div>
+  </div>
+
+  <!-- 06 WHY LINEUPS FAIL -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">06</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-deep">Deep Dive</span>
+        <div class="seg-title">The lineup problem — and why confident is not correct</div>
+        <div class="seg-time">16:00 – 19:00</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="director"><div class="director-icon">▶</div><div class="director-text"><strong>Visual:</strong> Recreate a simple 6-photo lineup illustration. No real faces — just placeholder silhouettes in a row.</div></div>
+      <p class="spoken">
+        Even if memory were perfectly reliable, the way we conduct lineups would still introduce errors. Let's break down what goes wrong.
+      </p>
+
+      <div class="slide-tag">Slide — 3 ways lineups fail</div>
+      <div class="failure-list">
+        <div class="failure-item">
+          <div class="failure-num">01</div>
+          <div class="failure-text">
+            <div class="failure-name">The relative judgment problem</div>
+            <div class="failure-desc">Witnesses don't ask "is the perpetrator here?" — they unconsciously ask "who looks most like what I remember?" If the real perpetrator isn't in the lineup, someone innocent still gets picked. The witness isn't lying; they're answering the wrong question.</div>
+          </div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-num">02</div>
+          <div class="failure-text">
+            <div class="failure-name">Administrator influence (non-blind lineups)</div>
+            <div class="failure-desc">If the detective knows who the suspect is, subtle cues — a pause, body language, "take your time with that one" — leak through. This is why double-blind lineups (administrator doesn't know the suspect) reduce false IDs significantly.</div>
+          </div>
+        </div>
+        <div class="failure-item">
+          <div class="failure-num">03</div>
+          <div class="failure-text">
+            <div class="failure-name">Confidence inflation</div>
+            <div class="failure-desc">At the moment of ID, witnesses may be uncertain. By trial — months later, after many re-tellings — their confidence has hardened. Juries see certainty. The original doubt is invisible. And certainty has almost no correlation with accuracy.</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="spoken">
+        <strong>The relative judgment problem.</strong> When a witness looks at a lineup, they don't just ask "is the perpetrator here?" — they unconsciously ask "which one looks most like what I remember?" This is a problem if the real perpetrator isn't in the lineup. The witness still picks someone — whoever looks closest — and does so with confidence. They're not lying. They're answering the question their brain actually posed.
+      </p>
+      <p class="spoken">
+        <strong>Administrator influence.</strong> If the detective running the lineup knows which person is the suspect, they can unconsciously — even with the best intentions — give cues. A pause, a smile, "good, take your time with that one." The witness picks up on these signals. This is why researchers strongly advocate for <em>double-blind lineups</em>, where the person running the lineup doesn't know who the suspect is.
+      </p>
+      <p class="spoken">
+        <strong>Confidence inflation.</strong> Here's the most dangerous one. At the moment of identification, witnesses are often not very confident. But by the time they testify in court — months later, after being asked to recall the identification repeatedly — their confidence has grown dramatically. The jury sees a rock-solid witness. The original uncertain identification is long gone.
+      </p>
+
+      <div class="slide-tag">Slide — confidence vs accuracy scatter plot</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">Witness confidence at trial vs. identification accuracy — research finding</div>
+        <div style="position:relative;height:200px;margin-bottom:8px">
+          <canvas id="confChart"></canvas>
+        </div>
+        <div style="font-size:11px;color:var(--ink-muted);border-top:1px solid var(--border);padding-top:8px;display:flex;gap:16px;flex-wrap:wrap">
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:rgba(13,107,86,0.6);display:inline-block"></span>Correct ID</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:50%;background:rgba(181,42,42,0.6);display:inline-block"></span>Wrong ID (innocent person)</span>
+          <span style="margin-left:auto;font-style:italic">Near-zero correlation (r ≈ 0.07 in trial conditions)</span>
+        </div>
+      </div>
+
+      <p class="spoken">
+        Research consistently shows <strong>there is almost no relationship between how confident a witness is at trial and how accurate their identification is</strong>. Confidence feels meaningful. It isn't.
+      </p>
+
+      <div class="slide-tag">Slide — judges survey data</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">How much do judges know about eyewitness reliability?</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center">
+          <div>
+            <div style="font-family:'Fraunces',serif;font-size:3rem;font-weight:300;color:var(--red);line-height:1">55%</div>
+            <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.5">average score of 160 US judges on a 14-item knowledge quiz about eyewitness reliability <span style="color:var(--ink-muted)">(Wise & Safer, survey study)</span></div>
+            <div style="margin-top:10px;font-size:11px;color:var(--ink-muted);font-style:italic">Barely above chance. Most didn't know about the weak confidence–accuracy link.</div>
+          </div>
+          <div>
+            <div class="bar-row">
+              <div class="bar-item">
+                <div class="bar-label">Judges avg. score <span>55%</span></div>
+                <div class="bar-track"><div class="bar-fill bar-red" style="width:55%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label">Random chance <span>50%</span></div>
+                <div class="bar-track"><div class="bar-fill bar-gray" style="width:50%"></div></div>
+              </div>
+              <div class="bar-item">
+                <div class="bar-label">Eyewitness experts <span>87%</span></div>
+                <div class="bar-track"><div class="bar-fill bar-teal" style="width:87%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="science-box"><p><strong>Judges knew less than you'd expect:</strong> A survey of 160 US judges found they averaged only <strong>55% correct</strong> on basic questions about eyewitness reliability — barely better than chance. Many didn't know about the weak link between confidence and accuracy.</p></div>
+    </div>
+  </div>
+
+  <!-- 07 HONEST TAKE -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">07</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-nuance">Nuance</span>
+        <div class="seg-title">Is eyewitness testimony useless? Not quite.</div>
+        <div class="seg-time">19:00 – 20:30</div>
+      </div>
+    </div>
+    <div class="body">
+      <p class="spoken">
+        Here's where I want to be careful, because the conclusion is sometimes oversimplified: eyewitness testimony is not <em>worthless</em>. It's <em>unreliable when treated as certain</em>.
+      </p>
+      <p class="spoken">
+        Eyewitness accounts helped find Gabby Petito. They help solve crimes every day. The problem isn't that witnesses are useless — it's that we treat their testimony as if it were as reliable as a fingerprint, when it isn't.
+      </p>
+      <p class="spoken">
+        The reforms researchers recommend are actually quite practical: double-blind lineups, sequential presentation of photos instead of simultaneous, confidence statements collected immediately at the time of identification, and instructions to witnesses that the suspect may not be present. Studies show these changes <strong>significantly reduce false identifications without reducing accurate ones</strong>.
+      </p>
+
+      <div class="slide-tag">Slide — current practice vs. evidence-based reforms</div>
+      <div class="diagram-wrap">
+        <div class="diagram-title">What the research says should change</div>
+        <table class="reform-table">
+          <thead><tr><th>Procedure</th><th>Common practice</th><th>Evidence-based reform</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Who runs the lineup</td>
+              <td><span class="badge-old">old</span> Detective who knows the suspect</td>
+              <td><span class="badge-new">new</span> Double-blind administrator (doesn't know suspect)</td>
+            </tr>
+            <tr>
+              <td>Photo presentation</td>
+              <td><span class="badge-old">old</span> Simultaneous — all photos at once</td>
+              <td><span class="badge-new">new</span> Sequential — one photo at a time, yes/no decision each</td>
+            </tr>
+            <tr>
+              <td>Pre-lineup instruction</td>
+              <td><span class="badge-old">old</span> No instruction — witness assumes suspect is present</td>
+              <td><span class="badge-new">new</span> Explicitly told: "The suspect may or may not be present"</td>
+            </tr>
+            <tr>
+              <td>Confidence recorded</td>
+              <td><span class="badge-old">old</span> At trial, months later (inflated)</td>
+              <td><span class="badge-new">new</span> Immediately at moment of identification (accurate)</td>
+            </tr>
+            <tr>
+              <td>Witness discussion</td>
+              <td><span class="badge-old">old</span> Witnesses often talk to each other after</td>
+              <td><span class="badge-new">new</span> Witnesses separated and instructed not to discuss</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="spoken">
+        Some states have adopted these. Many haven't. The gap between what the science says and what happens in courtrooms is still enormous.
+      </p>
+    </div>
+  </div>
+
+  <!-- 08 OUTRO -->
+  <div class="segment">
+    <div class="seg-header">
+      <div class="seg-num">08</div>
+      <div class="seg-title-wrap">
+        <span class="seg-tag tag-outro">Outro</span>
+        <div class="seg-title">What this tells us about ourselves</div>
+        <div class="seg-time">20:30 – 22:00</div>
+      </div>
+    </div>
+    <div class="body">
+      <p class="spoken">
+        The eyewitness testimony problem isn't really a legal problem. It's a problem with how we understand our own minds.
+      </p>
+      <p class="spoken">
+        We feel like we're reliable narrators of our own experience. We feel certain. And that feeling of certainty is completely decoupled from accuracy. You can be absolutely sure of something that never happened.
+      </p>
+      <p class="spoken">
+        Elizabeth Loftus has a quote that I keep thinking about: <em>"Memory, like liberty, is a fragile thing."</em>
+      </p>
+      <p class="spoken">
+        Ronald Cotton spent 11 years in prison. The real perpetrator went free and committed more crimes. Jennifer Thompson did everything right and destroyed an innocent man's life through no fault of her own.
+      </p>
+      <p class="spoken">
+        This isn't a story about bad people. It's a story about the gap between how we think our minds work and how they actually work. And understanding that gap might be one of the most important things you can do — in a courtroom, or just in how you think about your own certainties.
+      </p>
+      <p class="spoken">
+        Links to all the research, the Innocence Project, and the book Picking Cotton are in the description below.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="links-section">
+  <div class="links-inner">
+    <div>
+      <div class="links-col-label">Key resources</div>
+      <div class="link-item"><a href="https://innocenceproject.org/eyewitness-misidentification/">innocenceproject.org — eyewitness misidentification</a><div class="link-desc">Primary source for wrongful conviction data</div></div>
+      <div class="link-item"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4131297/">PMC: Causes and Solutions to Eyewitness Error</a><div class="link-desc">Peer-reviewed review of 100+ years of research</div></div>
+      <div class="link-item"><a href="https://www.simplypsychology.org/loftus-palmer.html">Loftus & Palmer 1974 — the car crash study</a><div class="link-desc">The foundational misinformation experiment explained</div></div>
+      <div class="link-item"><a href="https://innocenceproject.org/cases/ronald-cotton/">Innocence Project: Ronald Cotton case</a><div class="link-desc">Full case details and timeline</div></div>
+    </div>
+    <div>
+      <div class="links-col-label">Video metadata</div>
+      <div class="link-item" style="margin-bottom:16px">
+        <div class="link-desc" style="color:rgba(247,244,240,0.5);margin-bottom:4px">Suggested title</div>
+        <div style="color:rgba(247,244,240,0.8);font-size:13px;line-height:1.5">"You Saw It With Your Own Eyes. You Were Wrong." — The Science of False Memory</div>
+      </div>
+      <div class="link-item" style="margin-bottom:16px">
+        <div class="link-desc" style="color:rgba(247,244,240,0.5);margin-bottom:4px">Alt title (search-optimised)</div>
+        <div style="color:rgba(247,244,240,0.8);font-size:13px;line-height:1.5">Why Eyewitness Testimony is Nearly Useless — Psychology, Memory & Wrongful Convictions Explained</div>
+      </div>
+      <div class="link-item">
+        <div class="link-desc" style="color:rgba(247,244,240,0.5);margin-bottom:4px">Runtime / format</div>
+        <div style="color:rgba(247,244,240,0.8);font-size:13px;">18–22 min · talking head + graphics</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const correct = [];
+const wrong = [];
+for (let i = 0; i < 38; i++) {
+  correct.push({ x: Math.round(40 + Math.random() * 55), y: Math.round(45 + Math.random() * 50) });
+}
+for (let i = 0; i < 34; i++) {
+  wrong.push({ x: Math.round(38 + Math.random() * 57), y: Math.round(20 + Math.random() * 65) });
+}
+new Chart(document.getElementById('confChart'), {
+  type: 'scatter',
+  data: {
+    datasets: [
+      { label: 'Correct ID', data: correct, backgroundColor: 'rgba(13,107,86,0.55)', pointRadius: 5 },
+      { label: 'Wrong ID', data: wrong, backgroundColor: 'rgba(181,42,42,0.55)', pointRadius: 5 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+    scales: {
+      x: { title: { display: true, text: 'Witness confidence at trial (%)', font: { size: 10 } }, min: 20, max: 100, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 10 } } },
+      y: { title: { display: true, text: 'Identification accuracy (%)', font: { size: 10 } }, min: 0, max: 100, grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+</script>
+</body>
+</html>
